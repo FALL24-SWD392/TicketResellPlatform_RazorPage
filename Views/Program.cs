@@ -1,9 +1,13 @@
+using DotNetEnv;
+
 namespace Views
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            Env.Load();
+            
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddRazorPages();

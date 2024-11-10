@@ -400,5 +400,3 @@ FodyWeavers.xsd
 *.sln.iml
 .env
 # End of https://www.toptal.com/developers/gitignore/api/csharp
-Views/appsettings.json
-Views/appsettings.Development.json
