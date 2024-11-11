@@ -11,7 +11,7 @@ namespace Repositories.TicketRepository
         {
             dao = TicketDao.Instance;
         }
-        private static TicketRepository Instance
+        public static TicketRepository Instance
         {
             get
             {
