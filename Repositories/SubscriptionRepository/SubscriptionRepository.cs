@@ -11,7 +11,7 @@ namespace Repositories.SubscriptionRepository
         {
             dao = SubscriptionDao.Instance;
         }
-        private static SubscriptionRepository Instance
+        public static SubscriptionRepository Instance
         {
             get
             {
