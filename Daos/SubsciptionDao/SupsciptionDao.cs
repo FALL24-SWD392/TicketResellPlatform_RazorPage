@@ -11,10 +11,13 @@ namespace Daos.SubsciptionDao
         {
             context = new();
         }
-        public static SupsciptionDao GetInstance()
+        public static SupsciptionDao Instance
         {
-            instance ??= new();
-            return instance;
+            get
+            {
+                instance ??= new();
+                return instance;
+            }
         }
 
         public async Task<Subcription?> AddAsync(Subcription entity)
