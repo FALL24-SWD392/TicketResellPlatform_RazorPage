@@ -15,6 +15,14 @@ namespace Services.TicketService
             ticketRepo = TicketRepository.Instance;
             ticketTypeRepo = TicketTypeRepository.Instance;
         }
+        public static TicketService Instance
+        {
+            get
+            {
+                instance ??= new();
+                return instance;
+            }
+        }
 
         public async Task<Ticket?> AddAsync(Ticket entity)
             => await ticketRepo.AddAsync(entity);
