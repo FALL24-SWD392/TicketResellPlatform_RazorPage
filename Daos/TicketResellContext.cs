@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Business;
 
-namespace Business;
+namespace Daos;
 
 public partial class TicketResellContext : DbContext
 {
