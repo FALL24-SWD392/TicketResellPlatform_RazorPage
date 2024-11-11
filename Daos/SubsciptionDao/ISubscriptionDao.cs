@@ -2,7 +2,7 @@
 
 namespace Daos.SubsciptionDao
 {
-    public interface ISupscriptionDao : IDao<Subcription>
+    public interface ISubscriptionDao : IDao<Subcription>
     {
     }
 }

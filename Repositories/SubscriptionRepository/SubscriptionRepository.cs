@@ -6,10 +6,10 @@ namespace Repositories.SubscriptionRepository
     public class SubscriptionRepository : ISubscriptionRepository
     {
         private static SubscriptionRepository instance;
-        private readonly ISupscriptionDao dao;
+        private readonly ISubscriptionDao dao;
         private SubscriptionRepository()
         {
-            dao = SupsciptionDao.Instance;
+            dao = SubsciptionDao.Instance;
         }
         private static SubscriptionRepository Instance
         {
