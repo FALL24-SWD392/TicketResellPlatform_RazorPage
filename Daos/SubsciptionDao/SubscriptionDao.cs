@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Daos.SubsciptionDao
 {
-    public class SubsciptionDao : ISubscriptionDao
+    public class SubscriptionDao : ISubscriptionDao
     {
-        private static SubsciptionDao? instance;
+        private static SubscriptionDao? instance;
         private readonly TicketResellContext context;
-        private SubsciptionDao()
+        private SubscriptionDao()
         {
             context = new();
         }
-        public static SubsciptionDao Instance
+        public static SubscriptionDao Instance
         {
             get
             {

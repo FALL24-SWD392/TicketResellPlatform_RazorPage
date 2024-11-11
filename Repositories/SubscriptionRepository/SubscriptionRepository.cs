@@ -9,7 +9,7 @@ namespace Repositories.SubscriptionRepository
         private readonly ISubscriptionDao dao;
         private SubscriptionRepository()
         {
-            dao = SubsciptionDao.Instance;
+            dao = SubscriptionDao.Instance;
         }
         private static SubscriptionRepository Instance
         {
