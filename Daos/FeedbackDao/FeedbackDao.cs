@@ -11,7 +11,7 @@ namespace Daos.FeedbackDao
     public class FeedbackDao : IFeedbackDao
     {
         private static FeedbackDao? instance;
-        private TicketResellContext context;
+        private readonly TicketResellContext context;
         private FeedbackDao()
         {
             context = new();

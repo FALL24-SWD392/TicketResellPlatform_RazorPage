@@ -11,6 +11,11 @@ namespace Repositories.ChatboxRepository
     public class ChatboxRepository : IChatboxRepository
     {
         private static ChatboxRepository? instance;
+        private readonly IChatboxDao chatboxDao;
+        private ChatboxRepository()
+        {
+            chatboxDao = ChatboxDao.Instance;
+        }
         public static ChatboxRepository Instance
         {
             get
@@ -20,14 +25,14 @@ namespace Repositories.ChatboxRepository
             }
         }
 
-        public async Task<Chatbox?> AddAsync(Chatbox entity) => await ChatboxDao.Instance.AddAsync(entity);
+        public async Task<Chatbox?> AddAsync(Chatbox entity) => await chatboxDao.AddAsync(entity);
 
-        public async Task<Chatbox?> DeleteAsync(int id) => await ChatboxDao.Instance.DeleteAsync(id);
+        public async Task<Chatbox?> DeleteAsync(int id) => await chatboxDao.DeleteAsync(id);
 
-        public async Task<IList<Chatbox>> GetAllAsync() => await ChatboxDao.Instance.GetAllAsync();
+        public async Task<IList<Chatbox>> GetAllAsync() => await chatboxDao.GetAllAsync();
 
-        public async Task<Chatbox?> GetAsync(int id) => await ChatboxDao.Instance.GetAsync(id);
+        public async Task<Chatbox?> GetAsync(int id) => await chatboxDao.GetAsync(id);
 
-        public async Task<Chatbox?> UpdateAsync(Chatbox entity) => await ChatboxDao.Instance.UpdateAsync(entity);
+        public async Task<Chatbox?> UpdateAsync(Chatbox entity) => await chatboxDao.UpdateAsync(entity);
     }
 }

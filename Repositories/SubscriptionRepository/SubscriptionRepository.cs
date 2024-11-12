@@ -5,7 +5,7 @@ namespace Repositories.SubscriptionRepository
 {
     public class SubscriptionRepository : ISubscriptionRepository
     {
-        private static SubscriptionRepository instance;
+        private static SubscriptionRepository? instance;
         private readonly ISubscriptionDao dao;
         private SubscriptionRepository()
         {

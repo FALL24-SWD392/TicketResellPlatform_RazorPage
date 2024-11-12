@@ -11,7 +11,11 @@ namespace Repositories.OrderRepository
     public class OrderRepository : IOrderRepository
     {
         private static OrderRepository? _instance;
-        private OrderRepository() { }
+        private readonly IOrderDao orderDao;
+        private OrderRepository()
+        {
+            orderDao = OrderDao.Instance;
+        }
         public static OrderRepository Instance
         {
             get
@@ -20,14 +24,14 @@ namespace Repositories.OrderRepository
                 return _instance;
             }
         }
-        public Task<Order?> AddAsync(Order order) => OrderDao.Instance.AddAsync(order);
+        public Task<Order?> AddAsync(Order order) => orderDao.AddAsync(order);
 
-        public Task<Order?> DeleteAsync(int id) => OrderDao.Instance.DeleteAsync(id);
+        public Task<Order?> DeleteAsync(int id) => orderDao.DeleteAsync(id);
 
-        public Task<IList<Order>> GetAllAsync() => OrderDao.Instance.GetAllAsync();
+        public Task<IList<Order>> GetAllAsync() => orderDao.GetAllAsync();
 
-        public Task<Order?> GetAsync(int id) => OrderDao.Instance.GetAsync(id);
+        public Task<Order?> GetAsync(int id) => orderDao.GetAsync(id);
 
-        public Task<Order?> UpdateAsync(Order order) => OrderDao.Instance.UpdateAsync(order);
+        public Task<Order?> UpdateAsync(Order order) => orderDao.UpdateAsync(order);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DotNetEnv;
 using Services.ChatboxService;
+using Services.ChatService;
 using Services.FeedbackService;
 using Services.MembershipService;
 using Services.OrderService;
@@ -21,7 +22,7 @@ namespace Views
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
             builder.Services.AddSignalR();
-            // thiếu ChatService
+            builder.Services.AddSingleton<IChatService>(ChatService.Instance);
             builder.Services.AddSingleton<IFeedbackService>(FeedbackService.Instance);
             builder.Services.AddSingleton<IMembershipService>(MembershipService.Instance);
             builder.Services.AddSingleton<IOrderService>(OrderService.Instance);

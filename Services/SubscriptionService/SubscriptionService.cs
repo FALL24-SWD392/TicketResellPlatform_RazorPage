@@ -6,8 +6,8 @@ namespace Services.SubscriptionService
 {
     public class SubscriptionService : ISubscriptionService
     {
-        private static SubscriptionService instance;
-        private ISubscriptionRepository subscriptionRepo;
+        private static SubscriptionService? instance;
+        private readonly ISubscriptionRepository subscriptionRepo;
         private SubscriptionService()
         {
             subscriptionRepo = SubscriptionRepository.Instance;
@@ -16,7 +16,7 @@ namespace Services.SubscriptionService
         {
             get
             {
-                instance ??= new SubscriptionService();
+                instance ??= new();
                 return instance;
             }
         }

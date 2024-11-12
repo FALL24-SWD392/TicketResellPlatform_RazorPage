@@ -11,7 +11,11 @@ namespace Repositories.ReportRepository
     public class ReportRepository : IReportRepository
     {
         private static ReportRepository? _instance;
-        private ReportRepository() { }
+        private readonly IReportDao reportDao;
+        private ReportRepository()
+        {
+            reportDao = ReportDao.Instance;
+        }
         public static ReportRepository Instance
         {
             get
@@ -20,14 +24,14 @@ namespace Repositories.ReportRepository
                 return _instance;
             }
         }
-        public Task<Report?> AddAsync(Report report) => ReportDao.Instance.AddAsync(report);
+        public Task<Report?> AddAsync(Report report) => reportDao.AddAsync(report);
 
-        public Task<Report?> DeleteAsync(int id) => ReportDao.Instance.DeleteAsync(id);
+        public Task<Report?> DeleteAsync(int id) => reportDao.DeleteAsync(id);
 
-        public Task<IList<Report>> GetAllAsync() => ReportDao.Instance.GetAllAsync();
+        public Task<IList<Report>> GetAllAsync() => reportDao.GetAllAsync();
 
-        public Task<Report?> GetAsync(int id) => ReportDao.Instance.GetAsync(id);
+        public Task<Report?> GetAsync(int id) => reportDao.GetAsync(id);
 
-        public Task<Report?> UpdateAsync(Report report) => ReportDao.Instance.UpdateAsync(report);
+        public Task<Report?> UpdateAsync(Report report) => reportDao.UpdateAsync(report);
     }
 }

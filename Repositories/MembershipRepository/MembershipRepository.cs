@@ -11,7 +11,11 @@ namespace Repositories.MembershipRepository
     public class MembershipRepository : IMembershipRepository
     {
         private static MembershipRepository? _instance;
-        private MembershipRepository() { }
+        private readonly IMembershipDao membershipDao;
+        private MembershipRepository()
+        {
+            membershipDao = MembershipDao.Instance;
+        }
         public static MembershipRepository Instance
         {
             get
@@ -20,14 +24,14 @@ namespace Repositories.MembershipRepository
                 return _instance;
             }
         }
-        public Task<Membership?> AddAsync(Membership membership) => MembershipDao.Instance.AddAsync(membership);
+        public Task<Membership?> AddAsync(Membership membership) => membershipDao.AddAsync(membership);
 
-        public Task<Membership?> DeleteAsync(int id) => MembershipDao.Instance.DeleteAsync(id);
+        public Task<Membership?> DeleteAsync(int id) => membershipDao.DeleteAsync(id);
 
-        public Task<IList<Membership>> GetAllAsync() => MembershipDao.Instance.GetAllAsync();
+        public Task<IList<Membership>> GetAllAsync() => membershipDao.GetAllAsync();
 
-        public Task<Membership?> GetAsync(int id) => MembershipDao.Instance.GetAsync(id);
+        public Task<Membership?> GetAsync(int id) => membershipDao.GetAsync(id);
 
-        public Task<Membership?> UpdateAsync(Membership membership) => MembershipDao.Instance.UpdateAsync(membership);
+        public Task<Membership?> UpdateAsync(Membership membership) => membershipDao.UpdateAsync(membership);
     }
 }

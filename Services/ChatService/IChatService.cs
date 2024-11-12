@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.ChatMessageService
+namespace Services.ChatService
 {
-    public interface IChatMessageService : IService<ChatMessage>
+    public interface IChatService : IService<Chatbox>, IService<ChatMessage>
     {
     }
 }
