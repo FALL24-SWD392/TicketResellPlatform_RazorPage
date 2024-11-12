@@ -35,7 +35,7 @@ namespace Daos.ChatboxDao
 
         public Task<Chatbox?> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("This function is not supported");
         }
 
         public async Task<IList<Chatbox>> GetAllAsync() => await context.Chatboxes.Include(c => c.Status).ToListAsync();

@@ -35,7 +35,7 @@ namespace Daos.FeedbackDao
 
         public Task<Feedback?> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("This function is not supported");
         }
 
         public async Task<IList<Feedback>> GetAllAsync() => await context.Feedbacks.ToListAsync();

@@ -28,7 +28,7 @@ namespace Daos.ChatMessageDao
 
         public Task<ChatMessage?> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("This function is not supported");
         }
 
         public async Task<IList<ChatMessage>> GetAllAsync() => await context.ChatMessages.ToListAsync();
