@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.FeedbackRepo
+namespace Repositories.ChatboxRepository
 {
-    public interface IFeedbackRepo : IRepository<Feedback>
+    public interface IChatboxRepository : IRepository<Chatbox>
     {
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Business;
-using Repositories.ChatboxRepo;
+using Repositories.ChatboxRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +11,10 @@ namespace Services.ChatboxService
     public class ChatboxService : IChatboxService
     {
         private static ChatboxService? instance;
-        private ChatboxRepo chatboxRepo;
+        private ChatboxRepository chatboxRepo;
         private ChatboxService()
         {
-            chatboxRepo = ChatboxRepo.Instance;
+            chatboxRepo = ChatboxRepository.Instance;
         }
         public static ChatboxService Instance
         {

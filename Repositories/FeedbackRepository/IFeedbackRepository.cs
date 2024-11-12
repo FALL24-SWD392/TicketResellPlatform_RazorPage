@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.ChatMessageRepo
+namespace Repositories.FeedbackRepository
 {
-    public interface IChatMessageRepo : IRepository<ChatMessage>
+    public interface IFeedbackRepository : IRepository<Feedback>
     {
     }
 }

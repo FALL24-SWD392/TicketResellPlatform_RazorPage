@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.ChatboxRepo
+namespace Repositories.ChatboxRepository
 {
-    public class ChatboxRepo : IChatboxRepo
+    public class ChatboxRepository : IChatboxRepository
     {
-        private static ChatboxRepo? instance;
-        public static ChatboxRepo Instance
+        private static ChatboxRepository? instance;
+        public static ChatboxRepository Instance
         {
             get
             {

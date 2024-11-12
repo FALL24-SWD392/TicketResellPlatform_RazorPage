@@ -1,5 +1,5 @@
 ﻿using Business;
-using Repositories.FeedbackRepo;
+using Repositories.FeedbackRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +11,10 @@ namespace Services.FeedbackService
     public class FeedbackService : IFeedbackService
     {
         private static FeedbackService? instance;
-        private IFeedbackRepo feedbackRepo;
+        private IFeedbackRepository feedbackRepo;
         private FeedbackService()
         {
-            feedbackRepo = FeedbackRepo.Instance;
+            feedbackRepo = FeedbackRepository.Instance;
         }
         public static FeedbackService Instance
         {

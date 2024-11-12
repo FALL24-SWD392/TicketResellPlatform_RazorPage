@@ -1,5 +1,5 @@
 ﻿using Business;
-using Repositories.ChatMessageRepo;
+using Repositories.ChatMessageRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +11,10 @@ namespace Services.ChatMessageService
     public class ChatMessageService : IChatMessageService
     {
         private static ChatMessageService? instance;
-        private ChatMessageRepo messageRepo;
+        private ChatMessageRepository messageRepo;
         private ChatMessageService()
         {
-            messageRepo = ChatMessageRepo.Instance;
+            messageRepo = ChatMessageRepository.Instance;
         }
         public static ChatMessageService Instance { get { instance ??= new(); return instance; } }
 

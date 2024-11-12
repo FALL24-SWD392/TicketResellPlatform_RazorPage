@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.FeedbackRepo
+namespace Repositories.FeedbackRepository
 {
-    public class FeedbackRepo : IFeedbackRepo
+    public class FeedbackRepository : IFeedbackRepository
     {
-        private static FeedbackRepo? instance;
-        public static FeedbackRepo Instance
+        private static FeedbackRepository? instance;
+        public static FeedbackRepository Instance
         {
             get
             {

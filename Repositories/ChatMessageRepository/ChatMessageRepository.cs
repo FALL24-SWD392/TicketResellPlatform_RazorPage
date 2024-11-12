@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.ChatMessageRepo
+namespace Repositories.ChatMessageRepository
 {
-    public class ChatMessageRepo : IChatMessageRepo
+    public class ChatMessageRepository : IChatMessageRepository
     {
-        private static ChatMessageRepo? instance;
-        public static ChatMessageRepo Instance { get { instance ??= new(); return instance; } }
+        private static ChatMessageRepository? instance;
+        public static ChatMessageRepository Instance { get { instance ??= new(); return instance; } }
 
         public async Task<ChatMessage?> AddAsync(ChatMessage entity) => await ChatMessageDao.Instance.AddAsync(entity);
 
