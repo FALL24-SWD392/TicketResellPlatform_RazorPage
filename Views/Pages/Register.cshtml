@@ -1,0 +1,42 @@
+﻿@page "/Register"
+@model Views.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Authenticate";
+}
+<div class="vw-100 vh-100 position-relative">
+    <div class="w-100 h-100 position-fixed z-n1">
+        <img src="~/images/static/background.jpg" alt="" class="d-block w-100 h-100">
+    </div>
+    <div class="position-absolute top-50 start-50 w-25 translate-middle border border-secondary-subtle p-5"
+         style="border-radius: 2rem; backdrop-filter:blur(1rem)">
+        <p class="fs-1 text-light text-center">REGISTER TO CONTINUE</p>
+        <form method="post">
+            <div class="mb-5 w-100">
+                <label asp-for="Email" class="form-label text-light fs-2"></label><span class="text-danger fs-2"> *</span>
+                <input type="email" class="form-control text-light " style="background: none; font-size: 1.6rem; border-radius:.7rem" asp-for="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-5 w-100">
+                <label asp-for="Username" class="form-label text-light fs-2"></label><span class="text-danger fs-2"> *</span>
+                <input class="form-control text-light " style="background: none; font-size: 1.6rem; border-radius:.7rem" asp-for="Username">
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="mb-5 w-100">
+                <label asp-for="Password" class="form-label text-light fs-2"></label><span class="text-danger fs-2"> *</span>
+                <input type="password" class="form-control text-light" style="background: none; font-size: 1.6rem; border-radius:.7rem" asp-for="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-5 w-100">
+                <label asp-for="ConfirmPassword" class="form-label text-light fs-2"></label><span class="text-danger fs-2"> *</span>
+                <input type="password" class="form-control text-light" style="background: none; font-size: 1.6rem; border-radius:.7rem" asp-for="ConfirmPassword">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <p class="mb-5 fs-3 text-danger">@ViewData["ErrorMessage"]</p>
+            <div class="mb-5 d-flex justify-content-center align-items-center">
+                <button type="submit" class="btn btn-primary pe-5 ps-5 fs-2 rounded-pill">Register</button>
+            </div>
+        </form>
+        <a asp-page="/Login" class="text-light fs-3 text-decoration-none text-center">Already have an account? Login here</a>
+    </div>
+</div>
