@@ -1,4 +1,12 @@
-using DotNetEnv;
+﻿using DotNetEnv;
+using Services.ChatboxService;
+using Services.FeedbackService;
+using Services.MembershipService;
+using Services.OrderService;
+using Services.ReportService;
+using Services.SubscriptionService;
+using Services.TicketService;
+using Services.UserService;
 
 namespace Views
 {
@@ -13,6 +21,14 @@ namespace Views
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
             builder.Services.AddSignalR();
+            // thiếu ChatService
+            builder.Services.AddSingleton<IFeedbackService>(FeedbackService.Instance);
+            builder.Services.AddSingleton<IMembershipService>(MembershipService.Instance);
+            builder.Services.AddSingleton<IOrderService>(OrderService.Instance);
+            builder.Services.AddSingleton<IReportService>(ReportService.Instance);
+            builder.Services.AddSingleton<ISubscriptionService>(SubscriptionService.Instance);
+            builder.Services.AddSingleton<ITicketService>(TicketService.Instance);
+            builder.Services.AddSingleton<IUserService>(UserService.Instance);
 
             var app = builder.Build();
 

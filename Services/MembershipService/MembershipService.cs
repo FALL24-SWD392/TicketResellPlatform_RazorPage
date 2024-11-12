@@ -17,6 +17,14 @@ namespace Services.MembershipService
         {
             membershipRepository = MembershipRepository.Instance;
         }
+        public static MembershipService Instance
+        {
+            get
+            {
+                _instance ??= new();
+                return _instance;
+            }
+        }
 
         public Task<Membership?> AddAsync(Membership membership) => membershipRepository.AddAsync(membership);
 
