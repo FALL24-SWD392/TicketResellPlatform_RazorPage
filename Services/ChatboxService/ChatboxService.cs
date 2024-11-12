@@ -11,7 +11,7 @@ namespace Services.ChatboxService
     public class ChatboxService : IChatboxService
     {
         private static ChatboxService? instance;
-        private ChatboxRepository chatboxRepo;
+        private readonly ChatboxRepository chatboxRepo;
         private ChatboxService()
         {
             chatboxRepo = ChatboxRepository.Instance;

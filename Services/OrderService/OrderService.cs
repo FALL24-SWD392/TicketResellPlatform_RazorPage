@@ -11,10 +11,18 @@ namespace Services.OrderService
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository orderRepository;
-
-        public OrderService()
+        private static OrderService? instance;
+        private OrderService()
         {
-            this.orderRepository = new OrderRepository();
+            this.orderRepository = OrderRepository.Instance;
+        }
+        public static OrderService Instance
+        {
+            get
+            {
+                instance ??= new();
+                return instance;
+            }
         }
 
         public Task<Order?> AddAsync(Order order) => orderRepository.AddAsync(order);

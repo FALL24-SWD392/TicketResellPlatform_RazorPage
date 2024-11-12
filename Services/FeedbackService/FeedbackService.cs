@@ -11,7 +11,7 @@ namespace Services.FeedbackService
     public class FeedbackService : IFeedbackService
     {
         private static FeedbackService? instance;
-        private IFeedbackRepository feedbackRepo;
+        private readonly IFeedbackRepository feedbackRepo;
         private FeedbackService()
         {
             feedbackRepo = FeedbackRepository.Instance;

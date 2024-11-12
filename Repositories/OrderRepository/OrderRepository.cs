@@ -10,6 +10,16 @@ namespace Repositories.OrderRepository
 {
     public class OrderRepository : IOrderRepository
     {
+        private static OrderRepository? _instance;
+        private OrderRepository() { }
+        public static OrderRepository Instance
+        {
+            get
+            {
+                _instance ??= new();
+                return _instance;
+            }
+        }
         public Task<Order?> AddAsync(Order order) => OrderDao.Instance.AddAsync(order);
 
         public Task<Order?> DeleteAsync(int id) => OrderDao.Instance.DeleteAsync(id);

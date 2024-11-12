@@ -10,6 +10,16 @@ namespace Repositories.ReportRepository
 {
     public class ReportRepository : IReportRepository
     {
+        private static ReportRepository? _instance;
+        private ReportRepository() { }
+        public static ReportRepository Instance
+        {
+            get
+            {
+                _instance ??= new();
+                return _instance;
+            }
+        }
         public Task<Report?> AddAsync(Report report) => ReportDao.Instance.AddAsync(report);
 
         public Task<Report?> DeleteAsync(int id) => ReportDao.Instance.DeleteAsync(id);

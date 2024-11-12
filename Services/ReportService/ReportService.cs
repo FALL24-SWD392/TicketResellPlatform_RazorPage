@@ -12,10 +12,18 @@ namespace Services.ReportService
     public class ReportService : IReportService
     {
         private readonly IReportRepository reportRepository;
-
+        private static ReportService? instance;
         public ReportService()
         {
-            this.reportRepository = new ReportRepository();
+            reportRepository = ReportRepository.Instance;
+        }
+        public static ReportService Instance
+        {
+            get
+            {
+                instance ??= new();
+                return instance;
+            }
         }
 
         public Task<Report?> AddAsync(Report report) => reportRepository.AddAsync(report);

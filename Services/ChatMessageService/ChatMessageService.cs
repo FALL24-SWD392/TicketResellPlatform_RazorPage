@@ -11,7 +11,7 @@ namespace Services.ChatMessageService
     public class ChatMessageService : IChatMessageService
     {
         private static ChatMessageService? instance;
-        private ChatMessageRepository messageRepo;
+        private readonly ChatMessageRepository messageRepo;
         private ChatMessageService()
         {
             messageRepo = ChatMessageRepository.Instance;

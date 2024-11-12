@@ -10,6 +10,16 @@ namespace Repositories.MembershipRepository
 {
     public class MembershipRepository : IMembershipRepository
     {
+        private static MembershipRepository? _instance;
+        private MembershipRepository() { }
+        public static MembershipRepository Instance
+        {
+            get
+            {
+                _instance ??= new();
+                return _instance;
+            }
+        }
         public Task<Membership?> AddAsync(Membership membership) => MembershipDao.Instance.AddAsync(membership);
 
         public Task<Membership?> DeleteAsync(int id) => MembershipDao.Instance.DeleteAsync(id);

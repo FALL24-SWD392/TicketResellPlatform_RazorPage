@@ -11,7 +11,7 @@ namespace Daos.ChatMessageDao
     public class ChatMessageDao : IChatMessageDao
     {
         private static ChatMessageDao? instance;
-        private TicketResellContext context;
+        private readonly TicketResellContext context;
         private ChatMessageDao()
         {
             context = new();

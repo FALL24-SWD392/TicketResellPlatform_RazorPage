@@ -12,10 +12,10 @@ namespace Services.MembershipService
     public class MembershipService : IMembershipService
     {
         private readonly IMembershipRepository membershipRepository;
-
-        public MembershipService()
+        private static MembershipService? _instance;
+        private MembershipService()
         {
-            this.membershipRepository = new MembershipRepository();
+            membershipRepository = MembershipRepository.Instance;
         }
 
         public Task<Membership?> AddAsync(Membership membership) => membershipRepository.AddAsync(membership);
