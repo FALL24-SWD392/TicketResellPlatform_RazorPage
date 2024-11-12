@@ -1,0 +1,53 @@
+﻿@page
+@model Views.Pages.SubscriptionPage.IndexModel
+
+@{
+    ViewData["Title"] = "Subscriptions";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center mb-4">Subscriptions</h1>
+
+<p class="text-end mb-3">
+    <a asp-page="Create" class="btn btn-dark btn-lg btn-hover">Create New</a>
+</p>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    @foreach (var item in Model.Subcription)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <!-- Top Section: Name and Price -->
+                <div class="card-header text-center bg-light">
+                    <h4 class="card-title mb-2">@item.Name</h4>
+                    <h3 class="card-subtitle text-muted">@string.Format("{0:N0} VND", item.Price)</h3>
+                </div>
+                <!-- Bottom Section -->
+                <div class="card-body text-center">
+                    <p class="card-text">@item.Description</p>
+                    <p class="card-text">Sale Limit: @item.SaleLimit</p>
+                </div>
+
+                <!-- Action Buttons with extra spacing -->
+                <div class="card-footer d-flex justify-content-center gap-3">
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-dark btn-lg btn-hover">Edit</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-dark btn-lg btn-hover">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .btn-hover {
+        transition: all 0.3s ease-in-out;
+    }
+
+        .btn-hover:hover {
+            background-color: #fff; /* White background on hover */
+            color: #000; /* Black text color */
+            border: 1px solid #000; /* Optional: Adds a black border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
+            transform: scale(1.05); /* Slight zoom-in effect */
+        }
+</style>
