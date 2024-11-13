@@ -1,52 +1,154 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Views.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/Views.styles.css" asp-append-version="true"/>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Views</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
+<style>
+    a{
+        color: black !important; 
+        text-decoration: none;
+        margin: 0 1rem;
+    }
+    .text-hover:hover{
+        color: #3C3D37 !important;
+    }
+</style>
+<header>
+    <nav class="navbar border-bottom box-shadow mb-3" style="height: 6rem; background: var(--gradient-header)">
+        <div class="container-xl d-flex justify-content-between w-100">
+            <div id="logo" class="" style="width: 100px;">
+                <img src="~/images/static/logo-black.png" class="w-100" alt="logo">
+            </div>
+            <div id="body" class="">
+                <a href="#" class="text-hover">Home</a>
+                <a href="#" class="text-hover">Your Order</a>
+                <a href="#" class="text-hover">Your Ticket</a>
+                <a href="#" class="text-hover">Report</a>
+                <a href="#" class="text-hover">Pricing</a>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <button class="btn btn-outline-secondary" style="font-size: 1.6rem; border-radius: 10px">Create Ticket</button>
+                </div>
+                <div class="">
+                    <a href="/login" class="btn btn-primary text-light" style="font-size: 1.6rem; border-radius: 10px">Sign In</a>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Views - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
-    </footer>
+    </nav>
+</header>
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.payos.vn/payos-checkout/v1/stable/payos-initialize.js"></script>
-    <script type="module" src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+<div class="border border-opacity-15" style="height: 0.1rem;"></div>
+<footer class="bg-white text-dark container-xl h-50">
+    
+    <div class="mx-auto w-100 max-w-screen-xl">
+        <div class="row py-4 py-lg-5">
+            <div class="col-md-3 mb-4">
+                <h2 class="text-black text-uppercase fs-5 mb-3">Company</h2>
+                <ul class="list-unstyled text-secondary">
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">About</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Careers</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Brand Center</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Blog</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h2 class="text-black text-uppercase fs-5 mb-3">Help center</h2>
+                <ul class="list-unstyled text-secondary">
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Discord Server</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Twitter</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Facebook</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h2 class="text-black text-uppercase fs-5 mb-3">Legal</h2>
+                <ul class="list-unstyled text-secondary">
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Privacy Policy</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Licensing</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Terms &amp; Conditions</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h2 class="text-black text-uppercase fs-5 mb-3">Download</h2>
+                <ul class="list-unstyled text-secondary">
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">iOS</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Android</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">Windows</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-secondary">MacOS</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="bg-light text-center py-3 py-md-4">
+            <span class="d-block text-secondary mb-2">&copy; 2024 <a href="#" class="text-decoration-none">Ticket Resell</a>. All Rights Reserved.</span>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#" class="text-secondary">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="#" class="text-secondary">
+                    <i class="bi bi-discord"></i>
+                </a>
+                <a href="#" class="text-secondary">
+                    <i class="bi bi-twitter"></i>
+                </a>
+                <a href="#" class="text-secondary">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="#" class="text-secondary">
+                    <i class="bi bi-dribbble"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.payos.vn/payos-checkout/v1/stable/payos-initialize.js"></script>
+<script type="module" src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
