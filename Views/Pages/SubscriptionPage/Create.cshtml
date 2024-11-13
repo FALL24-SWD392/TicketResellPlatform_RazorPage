@@ -41,14 +41,14 @@
             </div>
 
             <div class="form-group mb-4">
-                <input type="submit" value="Create" class="btn btn-dark btn-block" />
+                <input type="submit" value="Create" class="btn btn-dark btn-block btn-hover" />
             </div>
         </form>
     </div>
 </div>
 
 <div class="text-center mt-3">
-    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-page="Index" class="btn btn-secondary btn-hover">Back to List</a>
 </div>
 
 @section Scripts {
@@ -56,3 +56,17 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<style>
+    .btn-hover {
+        transition: all 0.3s ease-in-out;
+    }
+
+        .btn-hover:hover {
+            background-color: #fff; /* White background on hover */
+            color: #000; /* Black text color */
+            border: 1px solid #000; /* Optional: Adds a black border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
+            transform: scale(1.05); /* Slight zoom-in effect */
+        }
+</style>

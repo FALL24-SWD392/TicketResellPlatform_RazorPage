@@ -44,9 +44,9 @@
         <div class="d-flex justify-content-between">
             <form method="post">
                 <input type="hidden" asp-for="Subcription.Id" />
-                <button type="submit" class="btn btn-dark btn-lg">Delete</button>
+                <button type="submit" class="btn btn-dark btn-lg btn-hover">Delete</button>
             </form>
-            <a asp-page="./Index" class="btn btn-secondary btn-lg">Back to List</a>
+            <a asp-page="./Index" class="btn btn-secondary btn-lg btn-hover">Back to List</a>
         </div>
     </div>
 </div>
@@ -56,3 +56,17 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<style>
+    .btn-hover {
+        transition: all 0.3s ease-in-out;
+    }
+
+        .btn-hover:hover {
+            background-color: #fff; /* White background on hover */
+            color: #000; /* Black text color */
+            border: 1px solid #000; /* Optional: Adds a black border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
+            transform: scale(1.05); /* Slight zoom-in effect */
+        }
+</style>
