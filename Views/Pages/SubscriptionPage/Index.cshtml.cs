@@ -24,7 +24,13 @@ namespace Views.Pages.SubscriptionPage
 
         public async Task OnGetAsync()
         {
-            Subcription = (IList<Subcription>)(await _subscriptionService.GetAllAsync()).Where(s => s.Description.Contains("Decrepated")).ToList();
+            // Subcription = (IList<Subcription>)(await _subscriptionService.GetAllAsync()).Where(s => !s.Description.Contains("Decrepated")).ToList();
+            Subcription = [
+                new Subcription { Id = 1, Description = "Description 1", Price = 10000 },
+                new Subcription { Id = 2, Description = "Description 2", Price = 20000 },
+                new Subcription { Id = 3, Description = "Description 3", Price = 30000 },
+                new Subcription { Id = 4, Description = "Description 4", Price = 40000 }
+            ];
         }
     }
 }

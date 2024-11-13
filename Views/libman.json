@@ -9,6 +9,10 @@
       "files": [
         "dist/browser/signalr.js"
       ]
+    },
+    {
+      "library": "bootstrap@5.3.3",
+      "destination": "wwwroot/bootstrap/"
     }
   ]
 }

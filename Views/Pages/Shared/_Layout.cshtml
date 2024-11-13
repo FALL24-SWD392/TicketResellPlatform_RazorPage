@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 
@@ -23,19 +23,22 @@
             </div>
             <ul class="nav mb-2 col-6 justify-content-center align-items-center">
                 <li class="d-flex align-items-center">
-                    <a href="#" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">Home</a>
+                    <a href="/" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">Home</a>
                 </li>
                 <li class="d-flex align-items-center">
-                    <a href="#" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">Tickets</a>
+                    <a href="/Tickets" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">Tickets</a>
                 </li>
                 <li class="d-flex align-items-center">
-                    <a href="#" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">My Orders</a>
+                    <a href="/Orders" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">My Orders</a>
                 </li>
                 <li class="d-flex align-items-center">
-                    <a href="#" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">My Tickets</a>
+                    <a href="/MyTickets" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">My Tickets</a>
                 </li>
                 <li class="d-flex align-items-center">
                     <a href="#" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">Chats</a>
+                </li>
+                <li class="d-flex align-items-center">
+                    <a href="/Subscriptions" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">Pricing</a>
                 </li>
             </ul>
             <div class="col-3 mb-2 d-flex align-items-center justify-content-end">
@@ -89,7 +92,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.payos.vn/payos-checkout/v1/stable/payos-initialize.js"></script>
     <script type="module" src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
