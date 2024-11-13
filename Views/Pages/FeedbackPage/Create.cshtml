@@ -1,0 +1,66 @@
+﻿@page
+@model Views.Pages.FeedbackPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center mb-4">Create Feedback</h1>
+
+<h4 class="text-center mb-4">Feedback Details</h4>
+<hr />
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Feedback.OrderId" class="control-label"></label>
+                <select asp-for="Feedback.OrderId" class="form-control" asp-items="ViewBag.OrderId"></select>
+                <span asp-validation-for="Feedback.OrderId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Feedback.Message" class="control-label"></label>
+                <input asp-for="Feedback.Message" class="form-control" placeholder="Enter feedback message" />
+                <span asp-validation-for="Feedback.Message" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Feedback.Rating" class="control-label"></label>
+                <input asp-for="Feedback.Rating" class="form-control" placeholder="Enter rating" min="1" max="5" pattern="^[1-5]$" title="Rating should be between 1 and 5" />
+                <span asp-validation-for="Feedback.Rating" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <input type="submit" value="Create" class="btn btn-dark btn-block btn-hover" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-page="Index" class="btn btn-secondary btn-hover">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    .btn-hover {
+        transition: all 0.3s ease-in-out;
+    }
+
+        .btn-hover:hover {
+            background-color: #fff; /* White background on hover */
+            color: #000; /* Black text color */
+            border: 1px solid #000; /* Optional: Adds a black border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
+            transform: scale(1.05); /* Slight zoom-in effect */
+        }
+</style>
