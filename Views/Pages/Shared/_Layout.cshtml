@@ -1,154 +1,98 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/Views.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
+
 <body>
-<style>
-    a{
-        color: black !important; 
-        text-decoration: none;
-        margin: 0 1rem;
-    }
-    .text-hover:hover{
-        color: #3C3D37 !important;
-    }
-</style>
-<header>
-    <nav class="navbar border-bottom box-shadow mb-3" style="height: 6rem; background: var(--gradient-header)">
-        <div class="container-xl d-flex justify-content-between w-100">
-            <div id="logo" class="" style="width: 100px;">
-                <img src="~/images/static/logo-black.png" class="w-100" alt="logo">
+    <style>
+    </style>
+    <header class="py-3 mb-4 border-bottom" style="height: 7rem;">
+        <div class="container-xl d-flex flex-wrap align-item-center justify-content-between h-100">
+            <div class="col-3 mb-2 h-100">
+                <a href="/" class="h-100 p-2 d-block">
+                    <div class="h-100">
+                        <img src="~/images/static/logo-black.png" alt="Ticket Resell" class="d-block h-100">
+                    </div>
+                </a>
             </div>
-            <div id="body" class="">
-                <a href="#" class="text-hover">Home</a>
-                <a href="#" class="text-hover">Your Order</a>
-                <a href="#" class="text-hover">Your Ticket</a>
-                <a href="#" class="text-hover">Report</a>
-                <a href="#" class="text-hover">Pricing</a>
-            </div>
-            <div class="d-flex justify-content-between">
-                <div>
-                    <button class="btn btn-outline-secondary" style="font-size: 1.6rem; border-radius: 10px">Create Ticket</button>
-                </div>
-                <div class="">
-                    <a href="/login" class="btn btn-primary text-light" style="font-size: 1.6rem; border-radius: 10px">Sign In</a>
-                </div>
+            <ul class="nav mb-2 col-6 justify-content-center align-items-center">
+                <li class="d-flex align-items-center">
+                    <a href="#" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">Home</a>
+                </li>
+                <li class="d-flex align-items-center">
+                    <a href="#" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">Tickets</a>
+                </li>
+                <li class="d-flex align-items-center">
+                    <a href="#" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">My Orders</a>
+                </li>
+                <li class="d-flex align-items-center">
+                    <a href="#" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">My Tickets</a>
+                </li>
+                <li class="d-flex align-items-center">
+                    <a href="#" class="nav-link px-2 link-dark text-dark fs-3 fw-semibold">Chats</a>
+                </li>
+            </ul>
+            <div class="col-3 mb-2 d-flex align-items-center justify-content-end">
+                <a href="/Login" type="button" class="btn btn-outline-dark fs-3 px-5 me-1" >Login</a>
+                <a href="/Register" type="button" class="btn btn-outline-dark fs-3 px-5" >Register</a>
             </div>
         </div>
-    </nav>
-</header>
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
-
-<div class="border border-opacity-15" style="height: 0.1rem;"></div>
-<footer class="bg-white text-dark container-xl h-50">
-    
-    <div class="mx-auto w-100 max-w-screen-xl">
-        <div class="row py-4 py-lg-5">
-            <div class="col-md-3 mb-4">
-                <h2 class="text-black text-uppercase fs-5 mb-3">Company</h2>
-                <ul class="list-unstyled text-secondary">
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">About</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Careers</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Brand Center</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Blog</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3 mb-4">
-                <h2 class="text-black text-uppercase fs-5 mb-3">Help center</h2>
-                <ul class="list-unstyled text-secondary">
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Discord Server</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Twitter</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Facebook</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Contact Us</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3 mb-4">
-                <h2 class="text-black text-uppercase fs-5 mb-3">Legal</h2>
-                <ul class="list-unstyled text-secondary">
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Privacy Policy</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Licensing</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Terms &amp; Conditions</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3 mb-4">
-                <h2 class="text-black text-uppercase fs-5 mb-3">Download</h2>
-                <ul class="list-unstyled text-secondary">
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">iOS</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Android</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">Windows</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none text-secondary">MacOS</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="bg-light text-center py-3 py-md-4">
-            <span class="d-block text-secondary mb-2">&copy; 2024 <a href="#" class="text-decoration-none">Ticket Resell</a>. All Rights Reserved.</span>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="#" class="text-secondary">
-                    <i class="bi bi-facebook"></i>
-                </a>
-                <a href="#" class="text-secondary">
-                    <i class="bi bi-discord"></i>
-                </a>
-                <a href="#" class="text-secondary">
-                    <i class="bi bi-twitter"></i>
-                </a>
-                <a href="#" class="text-secondary">
-                    <i class="bi bi-github"></i>
-                </a>
-                <a href="#" class="text-secondary">
-                    <i class="bi bi-dribbble"></i>
-                </a>
-            </div>
-        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
-</footer>
+
+    <div class="border border-opacity-15" style="height: 0.1rem;"></div>
+    <footer class="py-3 mt-4">
+        <div class="container-xl">
+            <div class="w-100 row justify-content-between align-items-start">
+                <div class="col-3">
+                    <p class="fs-4 text-dark text-uppercase fw-bold mb-4">Your account</p>
+                    <p class="fs-4 text-secondary text-uppercase">Account information</p>
+                    <p class="fs-4 text-secondary text-uppercase">tickets</p>
+                    <p class="fs-4 text-secondary text-uppercase">orders</p>
+                    <p class="fs-4 text-secondary text-uppercase">membership</p>
+                    <p class="fs-4 text-secondary text-uppercase">transaction</p>
+                </div>
+                <div class="col-3">
+                    <p class="fs-4 text-dark text-uppercase fw-bold mb-4">About us</p>
+                    <p class="fs-4 text-secondary text-uppercase">social network</p>
+                    <p class="fs-4 text-secondary text-uppercase">developers</p>
+                </div>
+                <div class="col-3">
+                    <p class="fs-4 text-dark text-uppercase fw-bold mb-4">Pages</p>
+                    <p class="fs-4 text-secondary text-uppercase">home</p>
+                    <p class="fs-4 text-secondary text-uppercase">upload ticket</p>
+                    <p class="fs-4 text-secondary text-uppercase">buy ticket</p>
+                    <p class="fs-4 text-secondary text-uppercase">chats</p>
+                    <p class="fs-4 text-secondary text-uppercase">terms</p>
+                </div>
+                <div class="col-3">
+                    <p class="fs-4 text-dark text-uppercase fw-bold mb-4">Follow us</p>
+                    <p class="fs-4 text-secondary text-uppercase">facebook</p>
+                    <p class="fs-4 text-secondary text-uppercase">instagram</p>
+                    <p class="fs-4 text-secondary text-uppercase">tiktok</p>
+                </div>
+            </div>
+            <div class="w-100">&copy; Copyright by Tixflow. All rights serve.</div>
+        </div>
+    </footer>
 
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.payos.vn/payos-checkout/v1/stable/payos-initialize.js"></script>
-<script type="module" src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.payos.vn/payos-checkout/v1/stable/payos-initialize.js"></script>
+    <script type="module" src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
