@@ -1,0 +1,26 @@
+﻿@page "/Tickets"
+@model Views.Pages.Tickets.IndexModel
+@{
+    ViewData["Title"] = "Tickets";
+    Layout = "_Layout";
+}
+<div class="container-xl d-flex flex-row flex-wrap">
+    <div class="row">
+        @foreach(var item in Model.Tickets)
+        {
+            <div class="col-3 mb-4 text-black fs-3 font-bold">
+                <div class="card w-100">
+                    <img src="@item.Image" class="card-img-top" style="height: 25rem; object-fit: cover;"/>
+                    <div class="card-body">
+                        <p class="card-title fw-bold">@item.Title</p>
+                        <p class="card-text">@item.Description</p>
+                        <a href="/Tickets/@item.Id" class="btn btn-dark w-100" style="font-size: 1.6rem;">View details</a>
+                    </div>
+                </div>
+            </div>   
+        }
+    </div>
+    <div>
+        
+    </div>
+</div>

@@ -1,0 +1,17 @@
+- Login
+- Register
+- Home Page
+- Profile (reset pass, membership trong nay luon)
+- List all ticket (có paging)
+
+- My tickets
+- My orders
+- Ticket detail
+- Create ticket
+- Edit ticket
+
+- My chats
+- Feedback
+- Report
+- Payment
+- Subscription
