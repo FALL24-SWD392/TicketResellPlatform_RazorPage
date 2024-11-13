@@ -1,0 +1,37 @@
+﻿@page "/Tickets/{id?}"
+@model Views.Pages.TicketDetailsPageModel
+
+@{
+    ViewData["Title"] = "TicketDetailsPage";
+    Layout = "_Layout";
+}
+
+<div class="container-xl" style="height: 100%">
+    <div class="row justify-content-between align-items-start">
+        <div class="col-6">
+            <div class="w-100">
+                <img src="@Model.Ticket.Image" class="d-block w-100"/>
+            </div>
+        </div>
+        <div class="col-6 px-3 ">
+            <div class="text-secondary border-bottom pb-3">
+                <p class="fs-1 fw-bold text-dark" style="text-align:justify;"><span class="badge fs-2 text-primary border-primary border">@Model.Ticket.Type.Type</span> @Model.Ticket.Title</p>
+                <p class="fs-2 " style="text-align:justify;">@Model.Ticket.Description</p>
+                <p class="d-flex justify-content-between align-items-center fs-2">Price: <span class="badge fs-2 text-success border-success border">@Model.Ticket.Price VNĐ</span></p>
+                <p class="d-flex justify-content-between align-items-center fs-2">Quantity: <span class="badge fs-2 text-warning border-warning border">@Model.Ticket.Quantity</span></p>
+                <p class="d-flex justify-content-between align-items-center fs-2">Valid until: <span class="badge fs-2 text-danger border-danger border">@Model.Ticket.ExpiryDate</span></p>
+            </div>
+            <div class="text-secondary py-3 border-bottom">
+                <p class="fs-1 fw-bold text-dark" style="text-align:justify;">Uploaded by: @Model.Ticket.Owner.Username</p>
+                <p class="d-flex justify-content-between align-items-center fs-2">Reputaion: <span class="badge fs-2 text-success border-success border">@Model.Ticket.Owner.Reputation</span></p>
+                <p class="d-flex justify-content-between align-items-center fs-2">Rating: <span class="badge fs-2 text-warning border-warning border">@Model.Ticket.Owner.Rating</span></p>
+            </div>
+            <form class="w-100 mt-3">
+                <button type="submit" class="btn btn-outline-dark w-100" style="font-size: 1.6rem;">Contact Seller</button>
+            </form>
+            <div class="w-100 mt-3">
+                <a href="/Tickets/@Model.Ticket.Id/Edit" class="btn btn-outline-dark w-100" style="font-size: 1.6rem;">Edit</a>
+            </div>
+        </div>  
+    </div>
+</div>  

@@ -1,0 +1,83 @@
+﻿@page "/Tickets/{id}/Edit"
+@model Views.Pages.EditTicketPageModel
+@{
+    ViewData["Title"] = "EditTicketPage";
+    Layout = "_Layout";
+}
+<div class="container-fluid w-80 mx-auto" style="height: 100%">
+    <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px; border-radius: 15px;">
+        <div class="card-body p-5">
+            <form method="post" style="font-size: 1.6rem;">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+                <input type="hidden" asp-for="Ticket.Id" />
+                <input type="hidden" asp-for="Ticket.Image" />
+                <div class="form-group">
+                    <label asp-for="Ticket.Image" class="control-label text-dark font-weight-bold"
+                        style="margin-top: 10px">Upload Image<span class="text-danger">*</span></label>
+                    <img id="previewImage"
+                        src="@(Model.Ticket.Image ?? "https://i.pinimg.com/736x/41/59/77/415977fa0031e50a4d56ef456ca88a9b.jpg")"
+                        alt="Uploaded Image" class="card-img-top mb-2" style="height: 25rem; object-fit: cover;" />
+                    <input type="file" class="form-control-file shadow-sm border-0" style="font-size: 1.6rem;" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ticket.Title" class="control-label text-dark font-weight-bold"
+                        style="margin-top: 10px">Title<span class="text-danger">*</span></label>
+                    <input asp-for="Ticket.Title" class="form-control shadow-sm border-0" style="font-size: 1.6rem;"
+                        placeholder="Enter Title" />
+                    <span asp-validation-for="Ticket.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ticket.Description" class="control-label text-dark font-weight-bold"
+                        style="margin-top: 10px">Description</label>
+                    <textarea asp-for="Ticket.Description" class="form-control shadow-sm border-0"
+                        style="font-size: 1.6rem;" rows="4" placeholder="Enter Description"></textarea>
+                    <span asp-validation-for="Ticket.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ticket.TypeId" class="control-label text-dark font-weight-bold"
+                        style="margin-top: 10px">Type<span class="text-danger">*</span></label>
+                    <select asp-for="Ticket.TypeId" class="form-control shadow-sm border-0" style="font-size: 1.6rem;"
+                        asp-items="ViewBag.TypeId">
+                        <option selected>Select Ticket Type</option>
+                    </select>
+                    <span asp-validation-for="Ticket.TypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ticket.ExpiryDate" class="control-label text-dark font-weight-bold"
+                        style="margin-top: 10px">Expiry Date<span class="text-danger">*</span></label>
+                    <input asp-for="Ticket.ExpiryDate" type="date" style="font-size: 1.6rem;"
+                        class="form-control shadow-sm border-0" />
+                    <span asp-validation-for="Ticket.ExpiryDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ticket.Price" class="control-label text-dark font-weight-bold"
+                        style="margin-top: 10px">Price<span class="text-danger">*</span></label>
+                    <input asp-for="Ticket.Price" type="number" style="font-size: 1.6rem;" step="0.01"
+                        class="form-control shadow-sm border-0" placeholder="Enter Price" />
+                    <span asp-validation-for="Ticket.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ticket.Quantity" class="control-label text-dark font-weight-bold"
+                        style="margin-top: 10px">Quantity<span class="text-danger">*</span></label>
+                    <input asp-for="Ticket.Quantity" type="number" class="form-control shadow-sm border-0"
+                        style="font-size: 1.6rem;" placeholder="Enter Quantity" />
+                    <span asp-validation-for="Ticket.Quantity" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" value="Save" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100"
+                        style="margin-top: 10px; font-size: 1.6rem;" />
+                </div>
+                <div class="form-group text-center">
+                    <a asp-page="MyTicketsPage" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100"
+                        style="margin-top: 10px; font-size: 1.6rem;">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
