@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿
+
+@using Views.Pages.Shared
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Microsoft.AspNetCore.Components
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -20,6 +26,7 @@
     }
 </style>
 <header>
+    <NavBar Title="Hello" Description="This is a reusable component"/>
     <nav class="navbar border-bottom box-shadow mb-3" style="height: 6rem; background: var(--gradient-header)">
         <div class="container-xl d-flex justify-content-between w-100">
             <div id="logo" class="" style="width: 100px;">

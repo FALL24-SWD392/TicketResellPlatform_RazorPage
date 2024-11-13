@@ -1,0 +1,19 @@
+<!-- MyComponent.razor -->
+<div class="NavBar">
+    <h3>@Title</h3>
+    <p>@Description</p>
+    <button @onclick="OnButtonClick">Click Me</button>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Description { get; set; }
+
+    private void OnButtonClick()
+    {
+        // Handle button click
+    }
+}
