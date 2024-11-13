@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Services.ChatService
 {
-    public interface IChatService : IService<Chatbox>, IService<ChatMessage>
+    public interface IChatService : IService<Chatbox>
     {
     }
 }

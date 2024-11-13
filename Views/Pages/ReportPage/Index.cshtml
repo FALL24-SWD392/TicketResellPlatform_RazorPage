@@ -1,0 +1,76 @@
+﻿@page
+@model Views.Pages.ReportPage.IndexModel
+
+@{
+    ViewData["Title"] = "Reports";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-4">@ViewData["Title"]</h1>
+
+<div class="mb-3">
+    <a asp-page="Create" class="btn btn-dark btn-hover">+ Add New Report</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Report[0].Sender)</th>
+                <th>Reported User</th>
+                <th>@Html.DisplayNameFor(model => model.Report[0].Status.Status)</th>
+                <th>@Html.DisplayNameFor(model => model.Report[0].CreateAt)</th>
+                <th>@Html.DisplayNameFor(model => model.Report[0].UpdateAt)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Report)
+            {
+                <tr>
+                    <td>
+                        @if (item.SenderId == item.Order.ChatBox.SellerId)
+                        {
+                            @Html.DisplayFor(modelItem => item.Order.ChatBox.Seller.Username)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Order.ChatBox.Buyer.Username)
+                        }
+                    </td>
+                    <td>
+                        @if (item.SenderId != item.Order.ChatBox.SellerId)
+                        {
+                            @Html.DisplayFor(modelItem => item.Order.ChatBox.Seller.Username)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Order.ChatBox.Buyer.Username)
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Status.Status)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CreateAt)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UpdateAt)</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-lg btn-hover btn-dark">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-lg btn-hover btn-dark">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .btn-hover {
+        transition: all 0.3s ease-in-out;
+    }
+
+        .btn-hover:hover {
+            background-color: #fff; /* White background on hover */
+            color: #000; /* Black text color */
+            border: 1px solid #000; /* Optional: Adds a black border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
+            transform: scale(1.05); /* Slight zoom-in effect */
+        }
+</style>

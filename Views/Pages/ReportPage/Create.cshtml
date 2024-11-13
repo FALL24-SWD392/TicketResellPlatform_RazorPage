@@ -1,0 +1,57 @@
+﻿@page
+@model Views.Pages.ReportPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create Report";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+<h4 class="text-center mb-4">Report Details</h4>
+<hr />
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="Report.Message" class="control-label"></label>
+                <input asp-for="Report.Message" class="form-control" />
+                <span asp-validation-for="Report.Message" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Report.Evidence" class="control-label"></label>
+                <input asp-for="Report.Evidence" class="form-control" />
+                <span asp-validation-for="Report.Evidence" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-dark btn-lg btn-hover" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-page="Index" class="btn btn-dark btn-hover">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    .btn-hover {
+        transition: all 0.3s ease-in-out;
+    }
+
+        .btn-hover:hover {
+            background-color: #fff; /* White background on hover */
+            color: #000; /* Black text color */
+            border: 1px solid #000; /* Optional: Adds a black border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
+            transform: scale(1.05); /* Slight zoom-in effect */
+        }
+</style>

@@ -28,6 +28,9 @@
     <None Update=".env">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update=".env.demo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
