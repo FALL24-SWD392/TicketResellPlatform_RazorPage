@@ -1,3 +1,4 @@
+using Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.UserService;
@@ -33,7 +34,37 @@ namespace Views.Pages
                 ViewData["ErrorMessage"] = "Passwords do not match";
                 return Page();
             }
-            return Page();
+            if ((await userService.GetAllAsync()).Any(u => u.Email.Equals(Email) || u.Username.Equals(Username)))
+            {
+                ViewData["ErrorMessage"] = "Email or Username has already existed!";
+                return Page();
+            }
+            var user = new User
+            {
+                Email = Email,
+                Username = Username,
+                Password = Password,
+                Avatar = "default.png",
+                Rating = 0,
+                Reputation = 100,
+                RoleId = 3,
+                StatusId = 1
+            };
+            await userService.AddAsync(user);
+
+            HttpContext.Session.SetInt32("UserId", user.Id);
+            HttpContext.Session.SetString("Email", user.Email);
+            HttpContext.Session.SetString("Username", user.Username);
+            HttpContext.Session.SetString("Password", string.Empty);
+            HttpContext.Session.SetString("Avatar", user.Avatar);
+            HttpContext.Session.SetString("Rating", user.Rating.ToString());
+            HttpContext.Session.SetInt32("Reputation", user.Reputation.Value);
+            HttpContext.Session.SetInt32("RoleId", user.RoleId);
+            HttpContext.Session.SetInt32("StatusId", user.StatusId);
+            HttpContext.Session.SetString("CreateAt", user.CreateAt.ToString());
+            HttpContext.Session.SetString("UpdateAt", user.UpdateAt.ToString());
+
+            return RedirectToPage("/Index");
         }
     }
 }
