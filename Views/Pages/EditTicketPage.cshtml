@@ -1,0 +1,169 @@
+﻿@page
+@model Views.Pages.EditTicketPageModel
+
+@{
+    ViewData["Title"] = "EditTicketPage";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid w-80 mx-auto" style="height: 100%">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light sidebar" style="border-right: 2px solid #ddd; height: 100%; box-shadow: none;">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/HomePage" style="font-size: 1.6rem; padding: 10px; border-radius: 5px; transition: background-color 0.3s; color: black;">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/ProfilePage" style="font-size: 1.6rem; padding: 10px; border-radius: 5px; transition: background-color 0.3s; color: black;">
+                            Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-page="/MyTicketsPage" style="font-size: 1.6rem; background-color: #000; color: white; border-radius: 5px; padding: 10px;">
+                            My Tickets
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/MyChatsPage" style="font-size: 1.6rem; padding: 10px; border-radius: 5px; transition: background-color 0.3s; color: black;">
+                            My Chats
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/MyOrdersPage" style="font-size: 1.6rem; padding: 10px; border-radius: 5px; transition: background-color 0.3s; color: black;">
+                            My Orders
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="col-md-11 ml-sm-auto col-lg-10 px-md-4">
+            <h1 class="text-center text-dark my-5">Edit Ticket</h1>
+
+            <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px; border-radius: 15px;">
+                <div class="card-body p-5">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+
+                        <input type="hidden" asp-for="Ticket.Id" />
+
+                        <div class="form-group">
+                            <label asp-for="Ticket.Image" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Upload Image<span class="text-danger">*</span></label>
+
+                            <img id="previewImage" src="@(Model.Ticket.Image ?? "https://i.pinimg.com/736x/41/59/77/415977fa0031e50a4d56ef456ca88a9b.jpg")"
+                                 alt="Uploaded Image" class="card-img-top mb-2" style="height: 25rem; object-fit: cover;" />
+
+                            <input asp-for="Ticket.Image" type="file" class="form-control-file shadow-sm border-0"
+                                   onchange="previewImage(event)" />
+
+                            <span asp-validation-for="Ticket.Image" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Ticket.Title" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Title<span class="text-danger">*</span></label>
+                            <input asp-for="Ticket.Title" class="form-control shadow-sm border-0" placeholder="Enter Title" />
+                            <span asp-validation-for="Ticket.Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Ticket.Description" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Description</label>
+                            <textarea asp-for="Ticket.Description" class="form-control shadow-sm border-0" rows="4" placeholder="Enter Description"></textarea>
+                            <span asp-validation-for="Ticket.Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Ticket.TypeId" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Type<span class="text-danger">*</span></label>
+                            <select asp-for="Ticket.TypeId" class="form-control shadow-sm border-0" asp-items="ViewBag.TypeId">
+                                <option selected>Select Ticket Type</option>
+                            </select>
+                            <span asp-validation-for="Ticket.TypeId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Ticket.ExpiryDate" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Expiry Date<span class="text-danger">*</span></label>
+                            <input asp-for="Ticket.ExpiryDate" type="date" class="form-control shadow-sm border-0" />
+                            <span asp-validation-for="Ticket.ExpiryDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Ticket.Price" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Price<span class="text-danger">*</span></label>
+                            <input asp-for="Ticket.Price" type="number" step="0.01" class="form-control shadow-sm border-0" placeholder="Enter Price" />
+                            <span asp-validation-for="Ticket.Price" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Ticket.Quantity" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Quantity<span class="text-danger">*</span></label>
+                            <input asp-for="Ticket.Quantity" type="number" class="form-control shadow-sm border-0" placeholder="Enter Quantity" />
+                            <span asp-validation-for="Ticket.Quantity" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <input type="submit" value="Save" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100" style="margin-top: 10px" />
+                        </div>
+                        <div class="form-group text-center">
+                            <a asp-page="MyTicketsPage" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100" style="margin-top: 10px">Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<style>
+    .text-dark {
+        color: #343a40;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+
+    .btn-dark {
+        background-color: #343a40;
+        color: white;
+    }
+
+    .btn-outline-dark {
+        border: 1px solid #343a40;
+        color: #343a40;
+    }
+
+        .btn-outline-dark:hover {
+            background-color: #343a40;
+            color: white;
+        }
+
+    .form-control.border-dark {
+        border: 1px solid #343a40;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.075);
+    }
+
+    .rounded {
+        border-radius: .375rem;
+    }
+
+    .nav-link.active {
+        background-color: #000;
+        color: white;
+    }
+
+    .nav-link, h1, .card-title {
+        color: black;
+    }
+
+        .nav-link:hover {
+            background-color: lightgray;
+        }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -37,10 +37,10 @@ namespace Daos.TicketDao
         }
 
         public async Task<IList<Ticket>> GetAllAsync()
-            => await context.Tickets.Include(t => t.Type).Include(t => t.Status).ToListAsync();
+            => await context.Tickets.Include(t => t.Type).Include(t => t.Status).Include(t => t.Owner).Include(t => t.Chatboxes).ToListAsync();
 
         public async Task<Ticket?> GetAsync(int id)
-            => await context.Tickets.Include(t => t.Type).Include(t => t.Status).FirstOrDefaultAsync(t => t.Id == id);
+            => await context.Tickets.Include(t => t.Type).Include(t => t.Status).Include(t => t.Owner).Include(t => t.Chatboxes).FirstOrDefaultAsync(t => t.Id == id);
 
         public async Task<Ticket?> UpdateAsync(Ticket entity)
         {

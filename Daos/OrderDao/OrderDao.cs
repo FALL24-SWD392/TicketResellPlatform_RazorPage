@@ -44,6 +44,13 @@ namespace Daos.OrderDao
         {
             return await _context.Orders
                 .Include(o => o.ChatBox)
+                    .ThenInclude(cb => cb.Buyer)
+                .Include(o => o.ChatBox)
+                    .ThenInclude(cb => cb.Seller)
+                .Include(o => o.ChatBox)
+                    .ThenInclude(cb => cb.Ticket)
+                .Include(o => o.ChatBox)
+                    .ThenInclude(cb => cb.Status)
                 .Include(o => o.Feedbacks)
                 .Include(o => o.Reports)
                 .ToListAsync();
