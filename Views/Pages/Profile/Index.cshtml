@@ -1,0 +1,48 @@
+﻿@page "/Profile"
+@model Views.Pages.Profile.IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "_Layout";
+}
+<div class="container-xl" style="min-height: calc(100vh - 70px - 244px); height:calc(100vh - 70px - 244px)">
+    <div class="row w-100 h-100 justify-content-between">
+        <div class="col-3 border-end border-dark-subtle">
+            <div class="w-100">
+                <img class="d-block w-100 object-fit-cover" src="@Model.Profile.Avatar"/>
+            </div>
+        </div>
+        <div class="col-9">
+            <h1 class="text-center fw-semibold border-bottom py-3 mb-3">Your profile information</h1>
+            <div class="row py-3 mb-3 border-bottom">
+                <div class="col-4 fs-3">
+                    <p class="fw-bold">Username: </p>
+                    <p class="fw-bold">Email: </p>
+                    <p class="fw-bold">Rating: </p>
+                    <p class="fw-bold">Reputation: </p>
+                </div>
+                <div class="col-8 fs-3">
+                    <p class="">@Model.Profile.Username</p>
+                    <p class="">@Model.Profile.Email</p>
+                    <p class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill d-block" style="width:fit-content">@Model.Profile.Rating</p>
+                    <p class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill d-block" style="width:fit-content">@Model.Profile.Reputation</p>
+                </div>
+            </div>
+            <div class="w-100 d-flex justify-content-center ">
+                <div class="w-50">
+                    <div class="row">
+                        <div class="col-4">
+                            <a href="/Profile/Edit" class="btn btn-outline-dark w-100 fs-5">Edit profile</a>
+                        </div>
+                        <div class="col-4">
+                            <a href="/Profile/ChangePassword" class="btn btn-outline-dark w-100 fs-5">Change password</a>
+                        </div>
+                        <div class="col-4">
+                            <a href="/Profile/Remove" class="btn btn-outline-danger w-100 fs-5">Remove</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
