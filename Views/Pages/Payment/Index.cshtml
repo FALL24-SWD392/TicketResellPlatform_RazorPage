@@ -1,0 +1,49 @@
+﻿@page "/Payment/{subscriptionId}"
+@model Views.Pages.Payment.IndexModel
+@{
+    ViewData["Title"] = "Payment";
+    Layout = "_Layout";
+}
+<div class="container-xl overflow-hidden" style="height: calc(100vh - 344px - 15px)">
+    <div class="row justify-content-center align-items-start h-100">
+        <div class="col-4">
+            <div id="content-container" style="padding: 10px">
+                <p><strong>Name:</strong> @Model.Subcription.Name</p>
+                <p><strong>Description:</strong> @Model.Subcription.Description</p>
+                <p><strong>Price:</strong> @Model.Subcription.Price</p>
+                <p><strong>Sale limit:</strong> @Model.Subcription.SaleLimit</p>
+            </div>
+        </div>
+        <div  class="col-8 h-100 overflow-hidden" >
+            <div id="embeded-payment-container" style="transform: scale(1.5) translateY(16%);" class="w-100 h-100"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        const contentContainer = document.getElementById("content-container");
+        let isOpen = true;
+        let config = {
+          RETURN_URL: window.location.origin,
+          ELEMENT_ID: "embeded-payment-container",
+          CHECKOUT_URL: "@Model.Membership.OrderCode",
+          embedded: true,
+          onSuccess: (event) => {
+            contentContainer.innerHTML = `
+                <div style="padding-top: 20px; padding-bottom:20px">
+                    Thanh toan thanh cong
+                </div>
+            `;
+          },
+          onCancel: (event) => {
+
+          },
+          onExit: (event) => {
+
+          },
+        };
+        const { open, close } = PayOSCheckout.usePayOS(config);
+        const content = open();
+        console.log(content);
+    </script>
+}

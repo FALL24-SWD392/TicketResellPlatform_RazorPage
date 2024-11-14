@@ -3,6 +3,7 @@ using Services.ChatService;
 using Services.FeedbackService;
 using Services.MembershipService;
 using Services.OrderService;
+using Services.PayOSService;
 using Services.ReportService;
 using Services.SubscriptionService;
 using Services.TicketService;
@@ -21,6 +22,7 @@ namespace Views
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
             builder.Services.AddSignalR();
+            builder.Services.AddSingleton<IPayOSService>(PayOSService.Instance);
             builder.Services.AddSingleton<IChatService>(ChatService.Instance);
             builder.Services.AddSingleton<IFeedbackService>(FeedbackService.Instance);
             builder.Services.AddSingleton<IMembershipService>(MembershipService.Instance);
