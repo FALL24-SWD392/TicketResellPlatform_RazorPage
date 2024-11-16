@@ -1,11 +1,27 @@
 ﻿@page "/Manager"
 @model Views.Pages.Manager.IndexModel
+@using Business
+@using Utils
 @{
     ViewBag.Title = "Users Manager";
     Layout = "_Manager";
+    string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+    User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+    if (user != null)
+    {
+        user.Avatar = user.Avatar == null ? "/images/static/user-avatar.png" : user.Avatar;
+        if (user.RoleId != 1 && user.RoleId != 2)
+        {
+            Response.Redirect("/NoPermission");
+        }
+    }
+    else
+    {
+        Response.Redirect("/NoPermission");
+    }
 }
 <div class="w-100 h-100">
-    <div class="container-xl">
+    <div class="container-xl h-100">
         <div class="d-flex justify-content-center align-items-center pb-3 border-bottom">
             <form class="w-50">
                 <div class="row m-0 justify-content-center align-items-center">
@@ -23,34 +39,95 @@
             </form>
         </div>
         <div class="w-100 p-3">
-            <table class="table table-secondary table-striped table-borderless">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Avatar</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach(var item in Model.Users)
+            <div class="w-100 border rounded-3 border-dark-subtle">
+                <div class="w-100 row m-0 fw-bold bg-dark-subtle border-bottom border-dark-subtle text-center">
+                    <div class="col-1">Id</div>
+                    <div class="col-1">Avatar</div>
+                    <div class="col-3">Username</div>
+                    <div class="col-3">Email</div>
+                    <div class="col-1">Role</div>
+                    <div class="col-2">Status</div>
+                    <div class="col-1">Action</div>
+                </div>
+                <div class="w-100 h-100">
+                    @foreach (var item in Model.Users)
                     {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>
-                                <img src="@item.Avatar" class="rounded-circle" style="width: 50px; height: 50px;" />
-                            </td>
-                            <td>@item.Username</td>
-                            <td>@item.Email</td>
-                            <td>@item.Role</td>
-                            <td>@item.Status</td>
-                        </tr>
+                        <div>
+                            <div class="row m-0 border-bottom border-dark-subtle justify-content-center align-items-center">
+                                <div class="col-1">@item.Id</div>
+                                <div class="col-1">
+                                    <div class="w-100">
+                                        @if (item.Avatar == null)
+                                        {
+                                            <img src="/images/static/user-avatar.png" class=" d-block w-100 object-fit-cover rounded-circle" />
+                                        }
+                                        else
+                                        {
+                                            <img src="@item.Avatar" class=" d-block w-100 object-fit-cover rounded-circle" />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-3">@item.Username</div>
+                                <div class="col-3">@item.Email</div>
+                                <div class="col-1">
+                                    <div class="w-100 text-center">
+                                        @if (item.RoleId == 3)
+                                        {
+                                            <span class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill text-capitalize">@item.Role.Name</span>
+                                        }
+                                        else if (item.RoleId == 2)
+                                        {
+                                            <span class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill text-capitalize">@item.Role.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill text-capitalize">@item.Role.Name</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="w-100 text-center">
+                                        @if (item.StatusId == 1)
+                                        {
+                                            <span class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill text-capitalize">@item.Status.Status</span>
+                                        }
+                                        else if (item.StatusId == 2)
+                                        {
+                                            <span class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill text-capitalize">@item.Status.Status</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill text-capitalize">@item.Status.Status</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <form asp-page-handler="RemoveUser" method="Post">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <div class="w-100">
+                                            <button type="submit" class="btn btn-outline-danger w-100 rounded-pill" style="font-size: 1.6rem">Remove</button>
+                                        </div>
+                                    </form>
+                                    <form asp-page-handler="BanUser" method="Post">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <div class="w-100">
+                                            <button type="submit" class="btn btn-outline-warning w-100 rounded-pill" style="font-size: 1.6rem">Ban</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     }
-                </tbody>
-            </table>
+                </div>
+            </div>
+        </div>
+        <div class="row m-0 justify-content-between align-items-center p-3">
+            <div class="col-2">
+                <a href="#" class="btn btn-outline-dark w-100 rounded-pill" style="font-size: 1.6rem">Previous</a>
+            </div>
+            <div class="col-2">
+                <a href="#" class="btn btn-outline-dark w-100 rounded-pill" style="font-size: 1.6rem">Next</a>
+            </div>
         </div>
     </div>
 </div>

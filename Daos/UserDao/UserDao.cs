@@ -43,11 +43,15 @@ namespace Daos.UserDao
         public async Task<User?> GetAsync(int id)
             => await context.Users.Include(u => u.Role).Include(u => u.Status).FirstOrDefaultAsync(u => u.Id == id);
 
+        public async Task<User?> GetUsreByEmail(string email)
+            => await context.Users.Include(u => u.Role).Include(u => u.Status).FirstOrDefaultAsync(u => u.Email == email);
+
         public async Task<User?> UpdateAsync(User entity)
         {
+            entity.UpdateAt = DateTime.Now;
+            entity.Status = await context.UserStatuses.FirstOrDefaultAsync(s => s.Id == entity.StatusId);
             context.Users.Update(entity);
             await context.SaveChangesAsync();
-            context.Entry(entity).State = EntityState.Detached;
             return entity;
         }
     }

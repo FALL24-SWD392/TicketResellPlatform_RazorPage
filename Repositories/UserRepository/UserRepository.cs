@@ -38,6 +38,9 @@ namespace Repositories.UserRepository
         public async Task<User?> GetAsync(int id)
             => await dao.GetAsync(id);
 
+        public async Task<User?> GetUsreByEmail(string email)
+            => await dao.GetUsreByEmail(email);
+
         public async Task<User?> UpdateAsync(User entity)
             => await dao.UpdateAsync(entity);
     }

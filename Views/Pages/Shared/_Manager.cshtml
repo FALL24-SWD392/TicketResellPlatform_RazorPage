@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -17,7 +18,7 @@
                         <h1 class="w-100 fw-bold text-center mb-5">System Manager</h1>
                         @if (ViewData["Title"].Equals("Users Manager"))
                         {
-                            <a class="d-block w-100 btn btn-dark text-decoration-none rounded-pill p-3 mb-3" role="button">
+                            <a class="d-block w-100 btn btn-dark text-decoration-none rounded-pill p-3 mb-3 disabled" role="button" href="/Manager">
                                 <div class="row m-0 justify-content-center align-items-center">
                                     <div class="col-2">
                                         <div class="w-100">
@@ -34,7 +35,7 @@
                         }
                         else
                         {
-                            <a class="d-block w-100 btn btn-outline-dark text-decoration-none rounded-pill p-3 mb-3" role="button">
+                            <a class="d-block w-100 btn btn-outline-dark text-decoration-none rounded-pill p-3 mb-3" role="button" href="/Manager">
                                 <div class="row m-0 justify-content-center align-items-center">
                                     <div class="col-2">
                                         <div class="w-100">
@@ -85,7 +86,7 @@
                                 </div>
                             </a>
                         }
-                        @if(ViewData["Title"].Equals("Orders Manager"))
+                        @if (ViewData["Title"].Equals("Orders Manager"))
                         {
                             <a class="d-block w-100 btn btn-dark text-decoration-none rounded-pill p-3 mb-3" role="button">
                                 <div class="row m-0 justify-content-center align-items-center">
@@ -119,7 +120,7 @@
                                 </div>
                             </a>
                         }
-                        @if(ViewData["Title"].Equals("Memberships Manager"))
+                        @if (ViewData["Title"].Equals("Memberships Manager"))
                         {
                             <a class="d-block w-100 btn btn-dark text-decoration-none rounded-pill p-3 mb-3" role="button">
                                 <div class="row m-0 justify-content-center align-items-center">
@@ -157,23 +158,23 @@
                         }
                     </div>
                     <div class="w-100">
-                        <form method="post">
-                            <button class="d-block w-100 btn btn-outline-danger text-decoration-none rounded-pill p-3" type="submit">
-                                <div class="row m-0 justify-content-center align-items-center">
-                                    <div class="col-2">
-                                        <div class="w-100">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">
-                                                <path d="M7.5 1v7h1V1z" />
-                                                <path d="M3 8.812a5 5 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="col-10">
-                                        <span class="fs-3 text-center w-100 d-block">Logout</span>
+
+                        <a class="d-block w-100 btn btn-outline-danger text-decoration-none rounded-pill p-3" type="submit" href="/Logout">
+                            <div class="row m-0 justify-content-center align-items-center">
+                                <div class="col-2">
+                                    <div class="w-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">
+                                            <path d="M7.5 1v7h1V1z" />
+                                            <path d="M3 8.812a5 5 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812" />
+                                        </svg>
                                     </div>
                                 </div>
-                            </button>
-                        </form>
+                                <div class="col-10">
+                                    <span class="fs-3 text-center w-100 d-block">Logout</span>
+                                </div>
+                            </div>
+                        </a>
+
                     </div>
                 </aside>
             </div>
@@ -187,6 +188,7 @@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.payos.vn/payos-checkout/v1/stable/payos-initialize.js"></script>
     <script type="module" src="~/js/site.js" asp-append-version="true"></script>
+    @await Component.InvokeAsync("Notyf");
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
