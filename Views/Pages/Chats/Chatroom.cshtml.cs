@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Repositories.ChatboxRepository;
 using Services.ChatService;
 using Services.OrderService;
+using Utils;
 
 namespace Views.Pages.Chats
 {
@@ -68,8 +69,8 @@ namespace Views.Pages.Chats
                     ChatBox = Chatbox,
                     ChatBoxId = Chatbox.Id,
                     Message = message,
-                    Sender = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("LogedInUser")),
-                    SenderId = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("LogedInUser")).Id,
+                    Sender = JsonUtil.ReadJsonItem<User>(HttpContext.Session.GetString("LogedInUser")),
+                    SenderId = JsonUtil.ReadJsonItem<User>(HttpContext.Session.GetString("LogedInUser")).Id,
                 };
                 SignalRHub signalRHub = new SignalRHub(_chatService);
                 await signalRHub.SendMessage(chatMessage, Chatbox);

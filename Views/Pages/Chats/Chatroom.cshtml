@@ -1,11 +1,13 @@
 ﻿@page "/Chats/{id}"
 @using Business
 @using Newtonsoft.Json
+@using Utils
 @model Views.Pages.Chats.ChatroomModel
 @{
     ViewData["Title"] = "Chats";
     Layout = "_Layout";
-    User user = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("LogedInUser"));
+    
+    User user = JsonUtil.ReadJsonItem<User>(HttpContext.Session.GetString("LogedInUser"));
 }
 <div class="container-xl row">
     <div class="col-3 p-3">

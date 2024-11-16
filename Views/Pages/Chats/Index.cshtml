@@ -1,6 +1,7 @@
 ﻿@page "/Chats"
 @using Business
 @using Newtonsoft.Json
+@using Utils
 @model Views.Pages.Chats.IndexModel
 @{
     ViewData["Title"] = "Chats";
@@ -8,7 +9,7 @@
     var jsonUser = HttpContext.Session.GetString("LogedInUser");
     if (jsonUser != null)
     {
-        User user = JsonConvert.DeserializeObject<User>(jsonUser);
+        User user = JsonUtil.ReadJsonItem<User>(jsonUser);
     }
     else
     {
