@@ -9,5 +9,6 @@ namespace Repositories.ChatboxRepository
 {
     public interface IChatboxRepository : IRepository<Chatbox>
     {
+        Task<List<Chatbox>> GetChatBoxOfUser(int UserId);
     }
 }

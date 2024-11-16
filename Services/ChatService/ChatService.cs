@@ -38,5 +38,7 @@ namespace Services.ChatService
         public async Task<Chatbox?> GetAsync(int id) => await chatboxRepository.GetAsync(id);
 
         public async Task<Chatbox?> UpdateAsync(Chatbox entity) => await chatboxRepository.UpdateAsync(entity);
+
+        public async Task<List<Chatbox>> GetChatboxOfUser(int userId) => await chatboxRepository.GetChatBoxOfUser(userId);
     }
 }
