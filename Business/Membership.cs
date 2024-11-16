@@ -16,7 +16,7 @@ public partial class Membership
 
     public int SupscriptionId { get; set; }
 
-    [StringLength(50)]
+    [StringLength(200)]
     [Unicode(false)]
     public string? OrderCode { get; set; }
 

@@ -23,7 +23,8 @@ namespace Daos.ChatMessageDao
             await context.ChatMessages.AddAsync(entity);
             await context.SaveChangesAsync();
             context.Entry(entity).State = EntityState.Detached;
-            return entity;
+
+            return await context.ChatMessages.Include(cm => cm.Sender).Include(cm => cm.ChatBox).OrderByDescending(cm => cm.CreateAt).FirstOrDefaultAsync();
         }
 
         public Task<ChatMessage?> DeleteAsync(int id)

@@ -6,19 +6,14 @@
 @{
     ViewData["Title"] = "Chats";
     Layout = "_Layout";
-    
+
     User user = JsonUtil.ReadJsonItem<User>(HttpContext.Session.GetString("LogedInUser"));
 }
 <div class="container-xl row">
     <div class="col-3 p-3">
         <div style="flex:auto">
             <h1 class="fs-1 text-dark fw-bold mb-3 pb-3 border-bottom">Chat room</h1>
-            <form method="post" class="row justify-content-center px-3">
-                <input type="submit" name="btnOrderTicket" value="Order" />
-                <input type="submit" name="btnCancelTicket" value="Cancel" />
-            </form>
             <div class="col-3 p-3" style="padding-right: 40px">
-                
             </div>
         </div>
         @if (Model.Chatboxes != null)
@@ -37,56 +32,74 @@
                 </div>
             }
         }
-        
+
     </div>
-</div>
-<div class="col-9 border-start p-3">
-    <h1 class="fs-1 text-dark fw-bold mb-3 pb-3 border-bottom">Messages</h1>
-    <div class="w-100 overflow-y-scroll p-3" style="min-height: calc(100vh - 355px);">
-        @if (Model.Messages != null)
+    <div class="col-9 border-start p-3">
+        <h1 class="fs-1 text-dark fw-bold mb-3 pb-3 border-bottom">Messages</h1>
+        @if (Model.Chatbox.StatusId == 1 && Model.Chatbox.SellerId == user.Id)
         {
-            foreach (var chat in Model.Chatbox.ChatMessages)
+            <form method="post" class="row justify-content-center px-3" asp-page-handler="CreateOrder">
+                <input type="submit" name="btnOrderTicket" value="Order" />
+            </form>
+            <form method="post" class="row justify-content-center px-3" asp-page-handler="CancelOrder">
+                <input type="submit" name="btnCancelTicket" value="Cancel" />
+            </form>
+        }
+        @if(Model.Chatbox.StatusId == 2)
+        {
+            <span class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill">Order Completed</span>
+        }
+        @if(Model.Chatbox.StatusId == 3)
+        {
+            <span class="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill">Order Canceled</span>
+        }
+        <div class="w-100 overflow-y-scroll p-3" style="min-height: calc(100vh - 355px);">
+            @if (Model.Messages != null)
             {
-                if (chat.SenderId != user.Id)
+                foreach (var chat in Model.Chatbox.ChatMessages)
                 {
-                    <div class="d-flex justify-content-end mb-3">
-                        <div class="d-flex flex-column align-items-end">
-                            <span class="fs-4 text-dark fw-bold">@Model.Chatbox.Buyer.Username</span>
-                            <span class="fs-5 text-secondary">@chat.Message</span>
+                    if (chat.SenderId != user.Id)
+                    {
+                        <div class="d-flex justify-content-end mb-3">
+                            <div class="d-flex flex-column align-items-end">
+                                <span class="fs-4 text-dark fw-bold">@Model.Chatbox.Buyer.Username</span>
+                                <span class="fs-5 text-secondary">@chat.Message</span>
+                            </div>
                         </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="d-flex flex-column">
-                            <span class="fs-4 text-dark fw-bold">@Model.Chatbox.Seller.Username</span>
-                            <span class="fs-5 text-secondary">@chat.Message</span>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-start mb-3">
+                            <div class="d-flex flex-column">
+                                <span class="fs-4 text-dark fw-bold">@Model.Chatbox.Seller.Username</span>
+                                <span class="fs-5 text-secondary">@chat.Message</span>
+                            </div>
                         </div>
-                    </div>
+                    }
                 }
             }
-        }
-        
-        <div class="d-flex justify-content-start mb-3">
-            <div class="d-flex flex-column">
-                <span class="fs-5 text-secondary" id="messageList"></span>
-            </div>
-        </div>
 
-        <div class="d-flex justify-content-start mb-3">
-            <div class="d-flex flex-column">
-                <span class="fs-5 text-secondary" id="messagesSendedList"></span>
+            <div class="d-flex justify-content-start mb-3">
+                <div class="d-flex flex-column">
+                    <span class="fs-5 text-secondary" id="messageList"></span>
+                </div>
             </div>
+
+            <div class="d-flex justify-content-start mb-3">
+                <div class="d-flex flex-column">
+                    <span class="fs-5 text-secondary" id="messagesSendedList"></span>
+                </div>
+            </div>
+
         </div>
-        
+        <form method="post" class="row justify-content-center px-3">
+            <div class="col-10 p-0">
+                <input type="text" name="txtMessage" class="form-control rounded-start-pill rounded-end-0" style="font-size:1.6rem" />
+            </div>
+            <button type="submit" class="btn btn-dark col-2 rounded-end-pill" style="font-size: 1.6rem;" name="btnSendMessage">Send</button>
+        </form>
     </div>
-    <form method="post" class="row justify-content-center px-3">
-        <div class="col-10 p-0">
-            <input type="text" name="txtMessage" class="form-control rounded-start-pill rounded-end-0" style="font-size:1.6rem" />
-        </div>
-        <button type="submit" class="btn btn-dark col-2 rounded-end-pill" style="font-size: 1.6rem;" name="btnSendMessage">Send</button>
-    </form>
 </div>
+
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>

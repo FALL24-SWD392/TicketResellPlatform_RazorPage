@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Business;
 using Daos;
 using Services.TicketService;
+using Services.ChatService;
+using Utils;
 
 namespace Views.Pages
 {
-    public class TicketDetailsPageModel(ITicketService ticketService) : PageModel
+    public class TicketDetailsPageModel(ITicketService ticketService, IChatService chatService) : PageModel
     {
         public Ticket Ticket { get; set; } = default!;
 
@@ -54,6 +56,26 @@ namespace Views.Pages
                 Ticket = ticket;
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            var jsonUser = HttpContext.Session.GetString("LogedInUser");
+            User user = JsonUtil.ReadJsonItem<User>(jsonUser);
+            var ticket = await ticketService.GetAsync(id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            await chatService.AddAsync(new Chatbox()
+            {
+                TicketId = ticket.Id,
+                BuyerId = user.Id,
+                SellerId = ticket.OwnerId,
+                CreateAt = DateTime.Now,
+                StatusId = 1
+            });
+            return Redirect("/Chats");
         }
     }
 }
