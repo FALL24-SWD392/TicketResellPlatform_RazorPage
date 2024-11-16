@@ -122,6 +122,7 @@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.payos.vn/payos-checkout/v1/stable/payos-initialize.js"></script>
     <script type="module" src="~/js/site.js" asp-append-version="true"></script>
+    @await Component.InvokeAsync("Notyf");
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 
