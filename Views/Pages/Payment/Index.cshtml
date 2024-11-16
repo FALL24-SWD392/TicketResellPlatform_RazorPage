@@ -1,8 +1,19 @@
 ﻿@page "/Payment/{subscriptionId}"
+@using Business
+@using Utils
 @model Views.Pages.Payment.IndexModel
 @{
     ViewData["Title"] = "Payment";
     Layout = "_Layout";
+    var jsonUser = HttpContext.Session.GetString("LogedInUser");
+    if (jsonUser != null)
+    {
+        User user = JsonUtil.ReadJsonItem<User>(jsonUser);
+    }
+    else
+    {
+        Response.Redirect("/");
+    }
 }
 <div class="container-xl overflow-hidden" style="height: calc(100vh - 344px - 15px)">
     <div class="row justify-content-center align-items-start h-100">
@@ -17,6 +28,12 @@
         <div class="col-8 h-100 overflow-hidden">
             <div id="embeded-payment-container" style="transform: scale(1.5) translateY(16%);" class="w-100 h-100"></div>
         </div>
+        <form method="post" id="successForm">
+            <input type="hidden" name="SubscriptionId" value="@Model.Subcription.Id" />
+            <input type="hidden" name="OrderCode" value="@Model.Membership.OrderCode" />
+            <input type="hidden" name="StartDate" value="@Model.Membership.StartDate" />
+            <input type="hidden" name="EndDate" value="@Model.Membership.EndDate" />
+        </form>
     </div>
 </div>
 @section Scripts {
@@ -34,6 +51,8 @@
                             Thanh toan thanh cong
                         </div>
                     `;
+                const form = document.getElementById("successForm");
+                form.submit();
             },
             onCancel: (event) => {
 
