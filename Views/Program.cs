@@ -1,4 +1,7 @@
-﻿using DotNetEnv;
+﻿using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
+using DotNetEnv;
+using Services;
 using Services.ChatService;
 using Services.FeedbackService;
 using Services.MembershipService;
@@ -16,9 +19,9 @@ namespace Views
         public static void Main(string[] args)
         {
             Env.Load();
-            
-            var builder = WebApplication.CreateBuilder(args);
 
+            var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
             builder.Services.AddSignalR();
@@ -31,7 +34,12 @@ namespace Views
             builder.Services.AddSingleton<ISubscriptionService>(SubscriptionService.Instance);
             builder.Services.AddSingleton<ITicketService>(TicketService.Instance);
             builder.Services.AddSingleton<IUserService>(UserService.Instance);
-
+            builder.Services.AddNotyf(config =>
+            {
+                config.DurationInSeconds = 10;
+                config.IsDismissable = true;
+                config.Position = NotyfPosition.TopRight;
+            });
             var app = builder.Build();
 
             if (!app.Environment.IsDevelopment())
@@ -40,6 +48,7 @@ namespace Views
                 app.UseHsts();
             }
 
+            app.UseNotyf();
             app.UseSession();
             app.UseStaticFiles();
             app.UseRouting();

@@ -3,12 +3,13 @@
 @{
     ViewData["Title"] = "Profile";
     Layout = "_Layout";
+    var photoPath = "/images/static/" + (Model.Profile.Avatar ?? "user-avatar.png");
 }
 <div class="container-xl" style="min-height: calc(100vh - 70px - 244px); height:calc(100vh - 70px - 244px)">
     <div class="row w-100 h-100 justify-content-between">
         <div class="col-3 border-end border-dark-subtle">
             <div class="w-100">
-                <img class="d-block w-100 object-fit-cover" src="@Model.Profile.Avatar"/>
+                <img class="d-block w-100 object-fit-cover" src="@photoPath"/>
             </div>
         </div>
         <div class="col-9">
