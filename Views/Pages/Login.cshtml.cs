@@ -3,6 +3,7 @@ using Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.UserService;
+using Microsoft.AspNetCore.Identity;
 
 namespace Views.Pages
 {
@@ -23,13 +24,17 @@ namespace Views.Pages
                 User? user = await userService.Login(Email, Password);
                 string userJson = JsonUtil.WriteJsonItem<User>(user);
                 HttpContext.Session.SetString("LogedInUser", userJson);
+                if(user.RoleId == 1 || user.RoleId == 2)
+                {
+                    return Redirect("/Manager");
+                }
             }
             catch (Exception e)
             {
                 ViewData["ErrorMessage"] = e.Message;
                 return Page();
             }
-            return RedirectToPage("/Index");
+            return Redirect("/");
         }
     }
 }
