@@ -28,6 +28,7 @@ namespace Services.ChatService
             }
         }
 
+        public async Task<ChatMessage?> CreateChatMessage(ChatMessage entity) => await chatMessageRepository.AddAsync(entity);
         public async Task<Chatbox?> AddAsync(Chatbox entity) => await chatboxRepository.AddAsync(entity);
 
         public async Task<Chatbox?> DeleteAsync(int id) => await chatboxRepository.DeleteAsync(id);
