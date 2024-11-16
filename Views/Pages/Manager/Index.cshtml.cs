@@ -87,29 +87,9 @@ namespace Views.Pages.Manager
                     Avatar = "/images/static/user-avatar.png", 
                     CreateAt = DateTime.UtcNow,
                     Role = new Role { Id = 1, Name = "User" },
-                    StatusId = 1,
-                    Status = new UserStatus { Id = 1, Status = "active" },
-                },
-                new () {
-                    Id = 1, 
-                    Username = "John Doe", 
-                    Email = "email@example.com", 
-                    Avatar = "/images/static/user-avatar.png", 
-                    CreateAt = DateTime.UtcNow,
-                    Role = new Role { Id = 1, Name = "User" },
                     StatusId = 3,
                     Status = new UserStatus { Id = 3, Status = "banned" },
-                },
-                new () {
-                    Id = 1, 
-                    Username = "John Doe", 
-                    Email = "email@example.com", 
-                    Avatar = "/images/static/user-avatar.png", 
-                    CreateAt = DateTime.UtcNow,
-                    Role = new Role { Id = 1, Name = "User" },
-                    StatusId = 2,
-                    Status = new UserStatus { Id = 2, Status = "removed" },
-                },
+                }
             ];
         }
     }
