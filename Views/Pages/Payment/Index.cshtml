@@ -11,10 +11,10 @@
                 <p><strong>Name:</strong> @Model.Subcription.Name</p>
                 <p><strong>Description:</strong> @Model.Subcription.Description</p>
                 <p><strong>Price:</strong> @Model.Subcription.Price</p>
-                <p><strong>Sale limit:</strong> @Model.Subcription.SaleLimit</p>
+                <p><strong>Sale limit:</strong> @Model.Subcription.SaleLimit</p> 
             </div>
         </div>
-        <div  class="col-8 h-100 overflow-hidden" >
+        <div class="col-8 h-100 overflow-hidden">
             <div id="embeded-payment-container" style="transform: scale(1.5) translateY(16%);" class="w-100 h-100"></div>
         </div>
     </div>
@@ -24,23 +24,23 @@
         const contentContainer = document.getElementById("content-container");
         let isOpen = true;
         let config = {
-          RETURN_URL: window.location.origin,
-          ELEMENT_ID: "embeded-payment-container",
-          CHECKOUT_URL: "@Model.Membership.OrderCode",
-          embedded: true,
-          onSuccess: (event) => {
-            contentContainer.innerHTML = `
-                <div style="padding-top: 20px; padding-bottom:20px">
-                    Thanh toan thanh cong
-                </div>
-            `;
-          },
-          onCancel: (event) => {
+            RETURN_URL: window.location.origin,
+            ELEMENT_ID: "embeded-payment-container",
+            CHECKOUT_URL: "@Model.Membership.OrderCode",
+            embedded: true,
+            onSuccess: (event) => {
+                contentContainer.innerHTML = `
+                        <div style="padding-top: 20px; padding-bottom:20px">
+                            Thanh toan thanh cong
+                        </div>
+                    `;
+            },
+            onCancel: (event) => {
 
-          },
-          onExit: (event) => {
+            },
+            onExit: (event) => {
 
-          },
+            },
         };
         const { open, close } = PayOSCheckout.usePayOS(config);
         const content = open();
