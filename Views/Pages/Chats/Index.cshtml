@@ -1,51 +1,36 @@
 ﻿@page "/Chats"
+@using Business
+@using Newtonsoft.Json
 @model Views.Pages.Chats.IndexModel
 @{
     ViewData["Title"] = "Chats";
     Layout = "_Layout";
+    var jsonUser = HttpContext.Session.GetString("LogedInUser");
+    if (jsonUser != null)
+    {
+        User user = JsonConvert.DeserializeObject<User>(jsonUser);
+    }
+    else
+    {
+        Response.Redirect("/");
+    }
 }
 <div class="container-xl row">
     <div class="col-3 p-3">
         <h1 class="fs-1 text-dark fw-bold mb-3 pb-3 border-bottom">Chat room</h1>
         <div class="w-100 overflow-y-auto overfow-x-hidden p-2 d-flex flex-column align-items-center">
-            <a href="/Chats/0" class="w-100 p-2 row justify-content-center align-items-center border border-dark rounded-pill mb-3 bg-secondary-subtle text-decoration-none" role="button">
-                <div class="col-3">
-                    <img class="d-block w-100 h-100 object-fit-cover" src="~/images/static/user-avatar.png" />
-                </div>
-                <div class="col-9 fs-5">
-                    <p class="mb-0 py-1 fs-4 fw-bold text-dark text-decoration-none">Chat room</p>
-                    <p class="mb-0 py-1 text-dark text-decoration-none">@DateTime.UtcNow</p>
-                </div>
-            </a>
-            <a href="/Chats/0" class="w-100 p-2 row justify-content-center align-items-center border border-dark rounded-pill mb-3 bg-secondary-subtle text-decoration-none" role="button">
-                <div class="col-3">
-                    <img class="d-block w-100 h-100 object-fit-cover" src="~/images/static/user-avatar.png" />
-                </div>
-                <div class="col-9 fs-5">
-                    <p class="mb-0 py-1 fs-4 fw-bold text-dark text-decoration-none">Chat room</p>
-                    <p class="mb-0 py-1 text-dark text-decoration-none">@DateTime.UtcNow</p>
-                </div>
-            </a>
-            <a href="/Chats/0" class="w-100 p-2 row justify-content-center align-items-center border border-dark rounded-pill mb-3 bg-secondary-subtle text-decoration-none" role="button">
-                <div class="col-3">
-                    <img class="d-block w-100 h-100 object-fit-cover" src="~/images/static/user-avatar.png" />
-                </div>
-                <div class="col-9 fs-5">
-                    <p class="mb-0 py-1 fs-4 fw-bold text-dark text-decoration-none">Chat room</p>
-                    <p class="mb-0 py-1 text-dark text-decoration-none">@DateTime.UtcNow</p>
-                </div>
-            </a>
-            <a href="/Chats/0" class="w-100 p-2 row justify-content-center align-items-center border border-dark rounded-pill mb-3 bg-secondary-subtle text-decoration-none" role="button">
-                <div class="col-3">
-                    <img class="d-block w-100 h-100 object-fit-cover" src="~/images/static/user-avatar.png" />
-                </div>
-                <div class="col-9 fs-5">
-                    <p class="mb-0 py-1 fs-4 fw-bold text-dark text-decoration-none">Chat room</p>
-                    <p class="mb-0 py-1 text-dark text-decoration-none">@DateTime.UtcNow</p>
-                </div>
-            </a>
-
-
+            @foreach (var item in Model.Chatboxes)
+            {
+                <a href="/Chats/0" class="w-100 p-2 row justify-content-center align-items-center border border-dark rounded-pill mb-3 bg-secondary-subtle text-decoration-none" role="button">
+                    <div class="col-3">
+                        <img class="d-block w-100 h-100 object-fit-cover" src="~/images/static/user-avatar.png" />
+                    </div>
+                    <div class="col-9 fs-5">
+                        <p class="mb-0 py-1 fs-4 fw-bold text-dark text-decoration-none">@item.Ticket.Title</p>
+                        <p class="mb-0 py-1 text-dark text-decoration-none">@DateTime.UtcNow</p>
+                    </div>
+                </a>
+            }
         </div>
     </div>
     <div class="col-9 border-start p-3" style="min-height: calc(100vh - 355px);">
