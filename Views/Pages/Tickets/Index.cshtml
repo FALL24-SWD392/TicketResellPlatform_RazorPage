@@ -8,30 +8,36 @@
     <div class="row">
         @foreach (var item in Model.Tickets)
         {
-            <div class="col-3 mb-4 text-black fs-3 font-bold">
-                <div class="card w-100 shadow">
-                    <img src="~/images/@item.Image" asp-append-version="true" class="card-img-top imageThumbnail" style="height: 25rem; object-fit: cover;" />
-                    <div class="card-body fs-4 text-secondary">
-                        <p class="card-title fw-bold text-capitalize text-dark" style="text-align: justify">@item.Title</p>
-                        <p class="card-text w-100" style="text-align: justify;">@item.Description</p>
-                        <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
-                            style="text-align: justify;">Price:
-                            <span class="badge border border-success text-success">@item.Price.ToString("#,##0 VNĐ")</span>
-                        </p>
-                        <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
-                            style="text-align: justify;">Quantity:
-                            <span class="badge border border-warning text-warning">@item.Quantity</span>
-                        </p>
-                        <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
-                            style="text-align: justify;">Valid until:
-                            <span class="badge border border-danger text-danger">@item.ExpiryDate</span>
-                        </p>
-                        <a href="/Tickets/@item.Id" type="button"
-                            class="btn btn-dark w-100 text-white"
-                           style="font-size: 1.6rem; transition: 0.3s;">View details</a>
+            if (item.StatusId == 2)
+            {
+                <div class="col-3 mb-4 text-black fs-3 font-bold">
+                    <div class="card w-100 shadow">
+                        <img src="~/images/@item.Image" asp-append-version="true" class="card-img-top imageThumbnail" style="height: 25rem; object-fit: cover;" />
+                        <div class="card-body fs-4 text-secondary">
+                            <p class="card-title fw-bold text-capitalize text-dark" style="text-align: justify">@item.Title</p>
+                            <p class="card-text w-100" style="text-align: justify;">@item.Description</p>
+                            <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
+                               style="text-align: justify;">
+                                Price:
+                                <span class="badge border border-success text-success">@item.Price.ToString("#,##0 VNĐ")</span>
+                            </p>
+                            <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
+                               style="text-align: justify;">
+                                Quantity:
+                                <span class="badge border border-warning text-warning">@item.Quantity</span>
+                            </p>
+                            <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
+                               style="text-align: justify;">
+                                Valid until:
+                                <span class="badge border border-danger text-danger">@item.ExpiryDate</span>
+                            </p>
+                            <a href="/Tickets/@item.Id" type="button"
+                               class="btn btn-dark w-100 text-white"
+                               style="font-size: 1.6rem; transition: 0.3s;">View details</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
     <div>

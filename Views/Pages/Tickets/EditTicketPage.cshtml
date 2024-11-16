@@ -1,8 +1,20 @@
 ﻿@page "/Tickets/{id}/Edit"
 @model Views.Pages.Tickets.EditTicketPageModel
+@using Business
+@using Utils
 @{
     ViewData["Title"] = "EditTicketPage";
     Layout = "_Layout";
+
+    string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+    User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+    int roleId = user.RoleId;
+    int userId = user.Id;
+    if ((roleId != 3) || (userId != Model.Ticket.Owner.Id))
+    {
+        Response.Redirect("../NoPermission");
+    }
+}
 }
 <div class="container-fluid w-80 mx-auto" style="height: 100%">
     <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px; border-radius: 15px;">

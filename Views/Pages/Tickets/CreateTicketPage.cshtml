@@ -1,9 +1,19 @@
 ﻿@page "/Tickets/Create"
 @model Views.Pages.Tickets.CreateTicketPageModel
-
+@using Business
+@using Utils
 @{
     ViewData["Title"] = "CreateTicketPage";
     Layout = "_Layout";
+
+    string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+    User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+    int roleId = user.RoleId;
+    int userId = user.Id;
+    if(roleId != 3)
+    {
+        Response.Redirect("../NoPermission");
+    }
 }
 
 <div class="container-fluid w-80 mx-auto" style="height: 100%">

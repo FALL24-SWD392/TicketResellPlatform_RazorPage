@@ -1,8 +1,19 @@
 ﻿@page "/MyTickets"
 @model Views.Pages.MyTicketsPageModel
+@using Business
+@using Utils
 @{
     ViewData["Title"] = "MyTicketsPage";
     Layout = "_Layout";
+
+    string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+    User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+    int roleId = user.RoleId;
+    int userId = user.Id;
+    if (roleId != 3)
+    {
+        Response.Redirect("../NoPermission");
+    }
 
 }
 <div class="container-xl w-80 mx-auto" style="height: 100%">
@@ -16,41 +27,47 @@
         <div class="row">
             @foreach (var item in Model.Ticket)
             {
-                <div class="col-3 mb-4 text-black fs-3 font-bold">
-                    <div class="card w-100 shadow">
-                        <img src="~/images/@item.Image" asp-append-version="true" class="card-img-top" style="height: 25rem; object-fit: cover;" />
-                        <div class="card-body fs-4 text-secondary">
-                            <p class="card-title fw-bold text-capitalize text-dark" style="text-align: justify">@item.Title</p>
-                            <p class="card-text w-100" style="text-align: justify;">@item.Description</p>
-                            <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
-                                style="text-align: justify;">Price:
-                                <span class="badge border border-success text-success">@item.Price.ToString("#,##0 VNĐ")</span>
-                            </p>
-                            <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
-                                style="text-align: justify;">Quantity:
-                                <span class="badge border border-warning text-warning">@item.Quantity</span>
-                            </p>
-                            <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
-                                style="text-align: justify;">Valid until:
-                                <span class="badge border border-danger text-danger">@item.ExpiryDate</span>
-                            </p>
-                            <div class="row d-flex justify-content-between align-items-center">
-                                <div class="col-6">
-                                    <a href="/Tickets/@item.Id/Edit" type="button" class="btn btn-dark w-100 text-white"
-                                       style="font-size: 1.6rem;">Edit</a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="/Tickets/@item.Id" type="button" class="btn btn-dark w-100 text-white"
+                if (item.OwnerId == userId)
+                {
+                    <div class="col-3 mb-4 text-black fs-3 font-bold">
+                        <div class="card w-100 shadow">
+                            <img src="~/images/@item.Image" asp-append-version="true" class="card-img-top" style="height: 25rem; object-fit: cover;" />
+                            <div class="card-body fs-4 text-secondary">
+                                <p class="card-title fw-bold text-capitalize text-dark" style="text-align: justify">@item.Title</p>
+                                <p class="card-text w-100" style="text-align: justify;">@item.Description</p>
+                                <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
+                                   style="text-align: justify;">
+                                    Price:
+                                    <span class="badge border border-success text-success">@item.Price.ToString("#,##0 VNĐ")</span>
+                                </p>
+                                <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
+                                   style="text-align: justify;">
+                                    Quantity:
+                                    <span class="badge border border-warning text-warning">@item.Quantity</span>
+                                </p>
+                                <p class="card-text w-100 d-flex w-100 align-items-center justify-content-between"
+                                   style="text-align: justify;">
+                                    Valid until:
+                                    <span class="badge border border-danger text-danger">@item.ExpiryDate</span>
+                                </p>
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <div class="col-6">
+                                        <a href="/Tickets/@item.Id/Edit" type="button" class="btn btn-dark w-100 text-white"
+                                           style="font-size: 1.6rem;">Edit</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="/Tickets/@item.Id" type="button" class="btn btn-dark w-100 text-white"
                                            style="font-size: 1.6rem; transition: 0.3s;">View details</a>
-                                </div>
-                                <div class="col-12 mt-2">
-                                    <a href="/Tickets/@item.Id/Delete" type="button" class="btn btn-danger w-100 text-white"
-                                       style="font-size: 1.6rem; transition: 0.3s;">Delete</a>
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <a href="/Tickets/@item.Id/Delete" type="button" class="btn btn-danger w-100 text-white"
+                                           style="font-size: 1.6rem; transition: 0.3s;">Delete</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             }
         </div>
     </div>
