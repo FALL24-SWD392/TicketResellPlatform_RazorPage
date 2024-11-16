@@ -48,10 +48,22 @@ namespace Daos.UserDao
 
         public async Task<User?> UpdateAsync(User entity)
         {
+            var existingRole = await context.Roles.FindAsync(entity.RoleId);
+            if (existingRole != null)
+            {
+                context.Entry(existingRole).State = EntityState.Detached;
+            }
+
+            var existingStatus = await context.UserStatuses.FindAsync(entity.StatusId);
+            if (existingStatus != null)
+            {
+                context.Entry(existingStatus).State = EntityState.Detached;
+            }
             entity.UpdateAt = DateTime.Now;
             entity.Status = await context.UserStatuses.FirstOrDefaultAsync(s => s.Id == entity.StatusId);
             context.Users.Update(entity);
             await context.SaveChangesAsync();
+            context.Entry(entity).State = EntityState.Detached;
             return entity;
         }
     }
