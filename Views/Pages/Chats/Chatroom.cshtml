@@ -1,15 +1,26 @@
 ﻿@page "/Chats/{id}"
 @using Business
 @using Newtonsoft.Json
+@using Utils
 @model Views.Pages.Chats.ChatroomModel
 @{
     ViewData["Title"] = "Chats";
     Layout = "_Layout";
-    User user = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("LogedInUser"));
+    
+    User user = JsonUtil.ReadJsonItem<User>(HttpContext.Session.GetString("LogedInUser"));
 }
 <div class="container-xl row">
     <div class="col-3 p-3">
-        <h1 class="fs-1 text-dark fw-bold mb-3 pb-3 border-bottom">Chat room</h1>
+        <div style="flex:auto">
+            <h1 class="fs-1 text-dark fw-bold mb-3 pb-3 border-bottom">Chat room</h1>
+            <form method="post" class="row justify-content-center px-3">
+                <button type="submit" class="btn btn-dark col-2 rounded-end-pill" style="font-size: 1.6rem;" name="btnOrderTicket" value="Order" />
+                <button type="submit" class="btn btn-dark col-2 rounded-end-pill" style="font-size: 1.6rem;" name="btnCancelTicket" value="Cancel" />
+            </form>
+            <div class="col-3 p-3" style="padding-right: 40px">
+                
+            </div>
+        </div>
 
         @foreach (var item in Model.Chatboxes)
         {
