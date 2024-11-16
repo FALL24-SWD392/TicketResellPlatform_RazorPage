@@ -21,7 +21,7 @@ namespace Views.Pages.Manager
         [BindProperty] public IList<Ticket> Tickets { get; set; } = [];
         public async Task<IActionResult> OnGetAsync()
         {
-            Tickets = (await _ticketService.GetAllAsync()).Where(t => t.StatusId == 1).ToList();
+            Tickets = (await _ticketService.GetAllAsync());
             return Page();
         }
         public async Task<IActionResult> OnPostApprovedTicketAsync(int id)
@@ -43,7 +43,7 @@ namespace Views.Pages.Manager
 
                 await _ticketService.UpdateAsync(ticket);
             }
-            Tickets = (await _ticketService.GetAllAsync()).Where(t => t.StatusId == 1).ToList();
+            Tickets = (await _ticketService.GetAllAsync()).ToList();
             return Page();
         }
         public async Task<IActionResult> OnPostRejectedTicketAsync(int id)
@@ -62,6 +62,28 @@ namespace Views.Pages.Manager
             else
             {
                 ticket.StatusId = 3;
+                await _ticketService.UpdateAsync(ticket);
+            }
+            Tickets = (await _ticketService.GetAllAsync()).Where(t => t.StatusId == 1).ToList();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostRemoveTicketAsync(int id)
+        {
+            string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+            User? manager = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+            var ticket = await _ticketService.GetAsync(id);
+            if (manager == null)
+            {
+                _notyfService.Error("User not found");
+            }
+            else if (ticket == null)
+            {
+                _notyfService.Error("Ticket not found");
+            }
+            else
+            {
+                ticket.StatusId = 6;
                 await _ticketService.UpdateAsync(ticket);
             }
             Tickets = (await _ticketService.GetAllAsync()).Where(t => t.StatusId == 1).ToList();

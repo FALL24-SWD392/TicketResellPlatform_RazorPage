@@ -50,12 +50,12 @@
     </form>
     </div>
         <div class="container-xl d-flex flex-row flex-wrap">
-            <div class="row">
+            <div class="row w-100">
                 @foreach (var item in Model.Tickets)
                 {
                     <div class="col-3 mb-4 text-black fs-3 font-bold">
                         <div class="card w-100 shadow">
-                            <img src="@item.Image" class="card-img-top" style="height: 25rem; object-fit: cover;" />
+                            <img src="/images/@item.Image" class="card-img-top" style="height: 25rem; object-fit: cover;" />
                             <div class="card-body fs-4 text-secondary">
                                 <p class="card-title fw-bold text-capitalize text-dark" style="text-align: justify">
                                     @item.Title</p>
