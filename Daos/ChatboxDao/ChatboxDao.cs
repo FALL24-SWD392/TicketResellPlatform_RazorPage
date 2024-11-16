@@ -41,7 +41,7 @@ namespace Daos.ChatboxDao
         public async Task<IList<Chatbox>> GetAllAsync() 
             => await context.Chatboxes.Include(c => c.Status).Include(c => c.Buyer).Include(c => c.Seller).Include(c => c.Ticket).Include(c => c.ChatMessages).ToListAsync();
 
-        public async Task<Chatbox?> GetAsync(int id) => await context.Chatboxes.Include(c => c.Status).Include(c => c.ChatMessages).Include(c => c.Buyer).Include(c => c.Seller).SingleOrDefaultAsync(c => c.Id == id);
+        public async Task<Chatbox?> GetAsync(int id) => await context.Chatboxes.Include(c => c.Status).Include(c => c.ChatMessages).Include(c => c.Buyer).Include(c => c.Seller).SingleOrDefaultAsync(c => c.Id == id && c.StatusId == 1);
 
         public async Task<Chatbox?> UpdateAsync(Chatbox entity)
         {
