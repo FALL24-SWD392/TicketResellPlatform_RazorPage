@@ -9,48 +9,31 @@ using Microsoft.EntityFrameworkCore;
 using Business;
 using Daos;
 using Services.TicketService;
+using Utils;
+using System.Net.Sockets;
 
 namespace Views.Pages.Tickets
 {
-    public class EditTicketPageModel(ITicketService ticketService) : PageModel
+    public class EditTicketPageModel : PageModel
     {
+        private readonly ITicketService _ticketService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public EditTicketPageModel(ITicketService ticketService, IWebHostEnvironment webHostEnvironment)
+        {
+            this._ticketService = ticketService;
+            this._webHostEnvironment = webHostEnvironment;
+        }
+
         [BindProperty]
         public Ticket Ticket { get; set; } = default!;
 
+        [BindProperty]
+        public IFormFile Image { get; set; } = null!;
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var ticket = await ticketService.GetAsync(id);
-            if (ticket == null)
-            {
-                Ticket = new Ticket()
-                {
-                    Id = 0,
-                    Title = "Not Found",
-                    Description = "The ticket is not found",
-                    Image = "https://placehold.co/400",
-                    OwnerId = 0,
-                    TypeId = 0,
-                    StatusId = 0,
-                    ExpiryDate = DateTime.Now,
-                    Price = 0,
-                    Quantity = 0,
-                    CreateAt = DateTime.Now,
-                    Type = new TicketType()
-                    {
-                        Id = 0,
-                        Type = "Not Found",
-                    },
-                    Owner = new User()
-                    {
-                        Id = 0,
-                        Username = "Not Found",
-                        Rating = 5,
-                        Reputation = 100,
-                    }
-                };
-                return Page();
-            }
-            var ticketTypes = await ticketService.GetAllTicketType();
+            var ticket = await _ticketService.GetAsync(id);
+            var ticketTypes = await _ticketService.GetAllTicketType();
             ViewData["TypeId"] = new SelectList(ticketTypes, "Id", "Type");
             Ticket = ticket;
             return Page();
@@ -60,16 +43,51 @@ namespace Views.Pages.Tickets
         {
             if (!ModelState.IsValid)
             {
-                return Page();
-            }
-            await ticketService.UpdateAsync(Ticket);
+                string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+                User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+                if (user != null)
+                    Ticket.OwnerId = user.Id;
 
-            return RedirectToPage("MyTicketsPage");
+                Ticket.StatusId = 1;
+
+                var uploadedImage = Request.Form.Files.FirstOrDefault();
+                if (uploadedImage != null)
+                {
+                    Ticket.Image = ProcessUploadedFile(uploadedImage);
+                }
+                else
+                {
+                    Ticket.Image = Ticket.Image;
+                }
+
+                await _ticketService.UpdateAsync(Ticket);
+                return RedirectToPage("../MyTicketsPage");
+            }
+
+            var ticketTypes = await _ticketService.GetAllTicketType();
+            ViewData["TypeId"] = new SelectList(ticketTypes, "Id", "Type");
+            return Page();
         }
 
         private bool TicketExists(int id)
         {
-            return ticketService.GetAsync(id) != null;
+            return _ticketService.GetAsync(id) != null;
+        }
+
+        private string ProcessUploadedFile(IFormFile file)
+        {
+            string uniqueFileName = null;
+            if (file != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
         }
     }
 }

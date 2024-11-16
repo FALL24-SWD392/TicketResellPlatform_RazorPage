@@ -53,7 +53,7 @@ namespace Views.Pages.Tickets
 
                 await _ticketService.AddAsync(Ticket);
 
-                return RedirectToPage("MyTickets");
+                return RedirectToPage("../MyTicketsPage");
             }
 
             var ticketTypes = await _ticketService.GetAllTicketType();
