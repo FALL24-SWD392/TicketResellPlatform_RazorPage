@@ -42,10 +42,12 @@
             <div class="w-100 border rounded-3 border-dark-subtle">
                 <div class="w-100 row m-0 fw-bold bg-dark-subtle border-bottom border-dark-subtle text-center">
                     <div class="col-1">Id</div>
-                    <div class="col-1">Title</div>
+                    <div class="col-3">Title</div>
+                    <div class="col-3">Description</div>
                     <div class="col-1">Image</div>
                     <div class="col-1">Owner</div>
                     <div class="col-1">Type</div>
+                    <div class="col-1">Status</div>
                     <div class="col-1">Action</div>
                 </div>
                 <div class="w-100 h-100">
@@ -54,34 +56,44 @@
                         <div>
                             <div class="row m-0 border-bottom border-dark-subtle justify-content-center align-items-center">
                                 <div class="col-1">@item.Id</div>
-                                <div class="col-1">@item.Title</div>
+                                <div class="col-3">@item.Title</div>
+                                <div class="col-3">@item.Description</div>
                                 <div class="col-1">
                                     <div class="w-100">
-                                        @if (item.Image == null)
-                                        {
-                                            <img src="/images/static/user-avatar.png" class=" d-block w-100 object-fit-cover rounded-circle" />
-                                        }
-                                        else
-                                        {
-                                            <img src="@item.Image" class=" d-block w-100 object-fit-cover rounded-circle" />
-                                        }
+
+                                            <img src="/images/@item.Image" class=" d-block w-100 object-fit-cover " />
+
                                     </div>
                                 </div>
                                 <div class="col-1">@item.Owner.Username</div>
                                 <div class="col-1">@item.Type.Type</div>
+                                <div class="col-1">@item.Status.Status</div>
                                 <div class="col-1">
-                                    <form asp-page-handler="ApprovedTicket" method="Post">
-                                        <input type="hidden" name="id" value="@item.Id" />
-                                        <div class="w-100">
-                                            <button type="submit" class="btn btn-outline-danger w-100 rounded-pill" style="font-size: 1.6rem">Approved</button>
-                                        </div>
-                                    </form>
-                                    <form asp-page-handler="RejectedTicket" method="Post">
-                                        <input type="hidden" name="id" value="@item.Id" />
-                                        <div class="w-100">
-                                            <button type="submit" class="btn btn-outline-warning w-100 rounded-pill" style="font-size: 1.6rem">Rejected</button>
-                                        </div>
-                                    </form>
+                                    @if (item.StatusId == 1)
+                                    {
+                                        <form asp-page-handler="ApprovedTicket" method="Post">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <div class="w-100">
+                                                <button type="submit" class="btn btn-outline-danger w-100 rounded-pill" style="font-size: 1.6rem">Approved</button>
+                                            </div>
+                                        </form>
+                                        <form asp-page-handler="RejectedTicket" method="Post">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <div class="w-100">
+                                                <button type="submit" class="btn btn-outline-warning w-100 rounded-pill" style="font-size: 1.6rem">Rejected</button>
+                                            </div>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-page-handler="RemoveTicket" method="Post">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <div class="w-100">
+                                                <button type="submit" class="btn btn-outline-danger w-100 rounded-pill" style="font-size: 1.6rem">Remove</button>
+                                            </div>
+                                        </form>
+                                    }
+
                                 </div>
                             </div>
                         </div>
