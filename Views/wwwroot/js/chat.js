@@ -9,8 +9,14 @@ document.getElementById("btnSendMessage").disable = true;
 connection.on("ReceiveMessage", function (message) {
     
     var li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
-    li.textContent = `${ message.Message }`;
+    document.getElementById("messagesRecivedList").appendChild(li);
+    li.textContent = `${message.Sender.Username}\n${message.Message}`;
+});
+connection.on("MessageSended", function (message) {
+
+    var li = document.createElement("li");
+    document.getElementById("messagesSendedList").appendChild(li);
+    li.textContent = `${message.Sender.Username}\n${message.Message}`;
 });
 
 connection.start().then(function () {

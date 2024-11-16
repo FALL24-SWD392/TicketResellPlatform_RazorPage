@@ -10,5 +10,6 @@ namespace Services.ChatService
     public interface IChatService : IService<Chatbox>
     {
         public Task<ChatMessage?> CreateChatMessage(ChatMessage entity);
+        public Task<List<Chatbox>> GetChatboxOfUser(int userId);
     }
 }
