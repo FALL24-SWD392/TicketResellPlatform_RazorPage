@@ -39,7 +39,7 @@ namespace Views.Pages
                 Email = Email,
                 Username = Username,
                 Password = BCrypt.Net.BCrypt.HashPassword(Password),
-                RoleId = 1,
+                RoleId = 3,
                 StatusId = 1
             };
             try
