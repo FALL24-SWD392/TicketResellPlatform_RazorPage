@@ -10,15 +10,13 @@
     User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
     int roleId = user.RoleId;
     int userId = user.Id;
-    if(roleId != 3)
+    if (roleId != 3)
     {
         Response.Redirect("../NoPermission");
     }
 }
 
 <div class="container-fluid w-80 mx-auto" style="height: 100%">
-
-
     <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px; border-radius: 15px;">
         <div class="card-body p-5">
             <form method="post" enctype="multipart/form-data">
@@ -33,24 +31,21 @@
                     <label asp-for="Image" class="col-sm-2 col-form-label control-label text-dark font-weight-bold">Image<span class="text-danger">*</span></label>
                     <div class="col-sm-10">
                         <div class="custom-file">
-                            <input asp-for="Image" class="custom-file-input form-control"/>
+                            <input asp-for="Image" class="custom-file-input form-control" type="file" required />
                         </div>
                     </div>
                     <span asp-validation-for="Ticket.Image" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Ticket.Title" class="control-label text-dark font-weight-bold"
-                        style="margin-top: 10px">Title<span class="text-danger">*</span></label>
-                    <input asp-for="Ticket.Title" class="form-control shadow-sm border-0" placeholder="Enter Title" />
+                    <label asp-for="Ticket.Title" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Title<span class="text-danger">*</span></label>
+                    <input asp-for="Ticket.Title" class="form-control shadow-sm border-0" placeholder="Enter Title" required />
                     <span asp-validation-for="Ticket.Title" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Ticket.Description" class="control-label text-dark font-weight-bold"
-                        style="margin-top: 10px">Description</label>
-                    <textarea asp-for="Ticket.Description" class="form-control shadow-sm border-0" rows="4"
-                        placeholder="Enter Description"></textarea>
+                    <label asp-for="Ticket.Description" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Description</label>
+                    <textarea asp-for="Ticket.Description" class="form-control shadow-sm border-0" rows="4" placeholder="Enter Description"></textarea>
                     <span asp-validation-for="Ticket.Description" class="text-danger"></span>
                 </div>
 
@@ -58,42 +53,36 @@
                     <label asp-for="Ticket.TypeId" class="control-label text-dark font-weight-bold" style="margin-top: 10px">
                         Type<span class="text-danger">*</span>
                     </label>
-                    <select asp-for="Ticket.TypeId" class="form-control shadow-sm border-0" asp-items="@(ViewData["TypeId"] as SelectList)">
+                    <select asp-for="Ticket.TypeId" class="form-control shadow-sm border-0" asp-items="@(ViewData["TypeId"] as SelectList)" required>
                         <option selected>Select Ticket Type</option>
                     </select>
                     <span asp-validation-for="Ticket.TypeId" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Ticket.ExpiryDate" class="control-label text-dark font-weight-bold"
-                        style="margin-top: 10px">Expiry Date<span class="text-danger">*</span></label>
-                    <input asp-for="Ticket.ExpiryDate" type="date" class="form-control shadow-sm border-0" />
+                    <label asp-for="Ticket.ExpiryDate" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Expiry Date<span class="text-danger">*</span></label>
+                    <input asp-for="Ticket.ExpiryDate" type="date" class="form-control shadow-sm border-0" required min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="Ticket.ExpiryDate" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Ticket.Price" class="control-label text-dark font-weight-bold"
-                        style="margin-top: 10px">Price<span class="text-danger">*</span></label>
-                    <input asp-for="Ticket.Price" type="number" step="0.01" class="form-control shadow-sm border-0"
-                        placeholder="Enter Price" />
+                    <label asp-for="Ticket.Price" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Price<span class="text-danger">*</span></label>
+                    <input asp-for="Ticket.Price" type="number" step="0.01" class="form-control shadow-sm border-0" placeholder="Enter Price" min="5000" max="100000000" required />
                     <span asp-validation-for="Ticket.Price" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Ticket.Quantity" class="control-label text-dark font-weight-bold"
-                        style="margin-top: 10px">Quantity<span class="text-danger">*</span></label>
-                    <input asp-for="Ticket.Quantity" type="number" class="form-control shadow-sm border-0"
-                        placeholder="Enter Quantity" />
+                    <label asp-for="Ticket.Quantity" class="control-label text-dark font-weight-bold" style="margin-top: 10px">Quantity<span class="text-danger">*</span></label>
+                    <input asp-for="Ticket.Quantity" type="number" class="form-control shadow-sm border-0" placeholder="Enter Quantity" min="1" required />
                     <span asp-validation-for="Ticket.Quantity" class="text-danger"></span>
                 </div>
 
                 <div class="form-group text-center">
-                    <input type="submit" value="Create" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100"
-                        style="margin-top: 10px" />
+                    <input type="submit" value="Create" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100" style="margin-top: 10px" />
                 </div>
+
                 <div class="form-group text-center">
-                    <a href="/MyTickets" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100"
-                        style="margin-top: 10px">Back</a>
+                    <a href="/MyTickets" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100" style="margin-top: 10px">Back</a>
                 </div>
             </form>
         </div>
@@ -116,10 +105,10 @@
         font-size: 1.6rem;
     }
 
-    .form-control:focus {
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        border-color: #007bff;
-    }
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            border-color: #007bff;
+        }
 
     .btn-dark {
         background-color: #343a40;
@@ -129,9 +118,9 @@
         font-size: 1.6rem;
     }
 
-    .btn-dark:hover {
-        background-color: #23272b;
-    }
+        .btn-dark:hover {
+            background-color: #23272b;
+        }
 
     .btn-lg {
         padding: 1rem;
@@ -143,9 +132,3 @@
         color: black;
     }
 </style>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
