@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "CreateTicketPage";
-    Layout = "_Layout";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid w-80 mx-auto" style="height: 100%">
@@ -15,15 +15,17 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
 
                 <div class="form-group">
-                    <label asp-for="Ticket.Image" class="control-label text-dark font-weight-bold"
-                        style="margin-top: 10px">Upload Image<span class="text-danger">*</span></label>
+                    <img id="previewImage" src="@Url.Content(Model.Ticket.Image ?? "/images/default.jpg")"
+                         class="card-img-top mb-2" style="height: 25rem; object-fit: cover;" />
+                </div>
 
-                    <img id="previewImage" src="https://i.pinimg.com/736x/41/59/77/415977fa0031e50a4d56ef456ca88a9b.jpg"
-                        alt="Uploaded Image" class="card-img-top mb-2" style="height: 25rem; object-fit: cover;" />
-
-                    <input asp-for="Ticket.Image" type="file" class="form-control-file shadow-sm border-0"
-                        onchange="previewImage(event)" />
-
+                <div class="form-group">
+                    <label asp-for="Image" class="col-sm-2 col-form-label control-label text-dark font-weight-bold">Image<span class="text-danger">*</span></label>
+                    <div class="col-sm-10">
+                        <div class="custom-file">
+                            <input asp-for="Image" class="custom-file-input form-control" onchange="previewImage(event)" />
+                        </div>
+                    </div>
                     <span asp-validation-for="Ticket.Image" class="text-danger"></span>
                 </div>
 
@@ -126,31 +128,25 @@
         font-size: 1.25rem;
     }
 
-    .nav-link.active {
-        background-color: #000;
-        color: white;
-    }
-
-    .nav-link,
-    h1,
+    .h1,
     .card-title {
         color: black;
-    }
-
-    .nav-link:hover {
-        background-color: lightgray;
     }
 </style>
 
 @section Scripts {
-    <script>
-        function previewImage(event) {
-            const preview = document.getElementById('previewImage');
-            preview.src = URL.createObjectURL(event.target.files[0]);
-            preview.onload = () => URL.revokeObjectURL(preview.src);
-        }
-    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+        <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('previewImage');
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+        </script>
     }
 }

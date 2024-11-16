@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Business;
 using Daos;
 using Services.TicketService;
+using Utils;
 
 namespace Views.Pages
 {
@@ -15,6 +16,9 @@ namespace Views.Pages
     {
         [BindProperty]
         public Ticket Ticket { get; set; } = default!;
+
+        [BindProperty]
+        public IFormFile Image { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -30,9 +34,22 @@ namespace Views.Pages
             {
                 string? logedInUser = HttpContext.Session.GetString("LogedInUser");
                 User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
-
-                Ticket.OwnerId = loggedInUser.Id;
+                if(user != null)
+                    Ticket.OwnerId = user.Id;
                 Ticket.StatusId = 1;
+
+                if (Image != null)
+                {
+                    var fileName = Path.GetFileName(Image.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await Image.CopyToAsync(stream);
+                    }
+
+                    Ticket.Image = fileName;
+                }
 
                 await ticketService.AddAsync(Ticket);
 

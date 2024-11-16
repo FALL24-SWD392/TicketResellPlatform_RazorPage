@@ -15,7 +15,7 @@
                     <label asp-for="Ticket.Image" class="control-label text-dark font-weight-bold"
                         style="margin-top: 10px">Upload Image<span class="text-danger">*</span></label>
                     <img id="previewImage"
-                        src="@(Model.Ticket.Image ?? "https://i.pinimg.com/736x/41/59/77/415977fa0031e50a4d56ef456ca88a9b.jpg")"
+                         src="~/images/@Model.Ticket.Image" asp-append-version="true"
                         alt="Uploaded Image" class="card-img-top mb-2" style="height: 25rem; object-fit: cover;" />
                     <input type="file" class="form-control-file shadow-sm border-0" style="font-size: 1.6rem;" />
                 </div>
