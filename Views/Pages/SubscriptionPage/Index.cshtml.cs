@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Business;
 using Daos;
 using Services.SubscriptionService;
+using Utils;
 
 namespace Views.Pages.SubscriptionPage
 {
@@ -22,15 +23,20 @@ namespace Views.Pages.SubscriptionPage
 
         public IList<Subcription> Subcription { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            // Subcription = (IList<Subcription>)(await _subscriptionService.GetAllAsync()).Where(s => !s.Description.Contains("Decrepated")).ToList();
-            Subcription = [
-                new Subcription { Id = 1, Description = "Description 1", Price = 10000 },
-                new Subcription { Id = 2, Description = "Description 2", Price = 20000 },
-                new Subcription { Id = 3, Description = "Description 3", Price = 30000 },
-                new Subcription { Id = 4, Description = "Description 4", Price = 40000 }
-            ];
+            var userJson = HttpContext.Session.GetString("User");
+            string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+            User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+            if (user == null)
+            {
+                return RedirectToPage("/Login");
+            }
+            else
+            {
+                Subcription = (await _subscriptionService.GetAllAsync()).Where(s => !s.Description.Contains("Decrepated")).ToList();
+            }
+            return Page();
         }
     }
 }

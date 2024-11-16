@@ -1,0 +1,81 @@
+﻿@page "/Memberships"
+@model Views.Pages.MembershipPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid w-80 mx-auto" style="height: 100%">
+    <h1 class="text-center text-dark my-5">Memberships</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered shadow mx-auto" style="max-width: 90%; border-radius: 10px;">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Membership[0].OrderCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Membership[0].Supscription.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Membership[0].StartDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Membership[0].EndDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Membership[0].Status)
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Membership)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Supscription.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status.Status)
+                        </td>
+                        <td>
+                            <a class="btn btn-dark btn-lg" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .nav-link.active {
+        background-color: #000;
+        color: white;
+    }
+
+    .nav-link,
+    h1,
+    .card-title {
+        color: black;
+    }
+
+        .nav-link:hover {
+            background-color: lightgray;
+        }
+
+    .btn {
+        border-radius: 5px;
+    }
+</style>
