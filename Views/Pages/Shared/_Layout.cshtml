@@ -1,4 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using Business
+@using Utils
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    string? logedInUser = HttpContextAccessor.HttpContext.Session.GetString("LogedInUser");
+    User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+    if(user != null)
+    {
+        user.Avatar = user.Avatar == null ? "/images/static/user-avatar.png" : user.Avatar;
+    }
+    Console.WriteLine(user);
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -42,14 +56,22 @@
                 </li>
             </ul>
             <div class="col-3 mb-2 d-flex align-items-center justify-content-end h-100">
+                @if(user == null)
+                {
+                    <a href="/Login" type="button" class="btn btn-outline-dark fs-3 px-5 me-1">Login</a>
+                    <a href="/Register" type="button" class="btn btn-outline-dark fs-3 px-5">Register</a>
+                }
+                else
+                {
+                    <div class="h-100">
+                        <a href="/Profile" class="d-block h-100" role="button">
+                            <img src="@user.Avatar" class="d-block h-100" />
+                        </a>
+                        
+                    </div>
+                    <a href="/Logout" type="button" class="btn btn-outline-danger fs-3 px-5 ms-3">Logout</a>
+                }
                 
-                <a href="/Login" type="button" class="btn btn-outline-dark fs-3 px-5 me-1" >Login</a>
-                <a href="/Register" type="button" class="btn btn-outline-dark fs-3 px-5" >Register</a>
-                <div class="h-100">
-                    <a href="/Profile" class="d-block h-100" role="button">
-                        <img src="~/images/static/user-avatar.png" class="d-block h-100" />
-                    </a>
-                </div>
             </div>
         </div>
     </header>

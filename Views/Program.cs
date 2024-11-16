@@ -18,7 +18,7 @@ namespace Views
             Env.Load();
             
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
             builder.Services.AddSignalR();
