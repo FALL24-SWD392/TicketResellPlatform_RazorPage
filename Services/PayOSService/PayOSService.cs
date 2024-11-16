@@ -32,11 +32,18 @@ namespace Services.PayOSService
             PayOS payOS = new(clientId, apiKey, checksumKey);
             var domain = "http://localhost:5153";
 
+            var subscription = await subscriptionRepository.GetAsync(subscriptionId);
+
+            if (subscription == null)
+            {
+                return null;
+            }
+
             var paymentLinkRequest = new PaymentData(
                 orderCode: int.Parse(DateTimeOffset.Now.ToString("ffffff")),
-                amount: 2000,
+                amount: subscription.Price,
                 description: "Thanh toan don hang",
-                items: [new("Mì tôm hảo hảo ly", 1, 2000)],
+                items: [new(subscription.Name, 1, subscription.Price)],
                 returnUrl: domain,
                 cancelUrl: domain
             );
