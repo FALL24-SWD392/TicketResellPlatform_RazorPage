@@ -16,7 +16,6 @@ namespace Views
         }
         public override async Task OnConnectedAsync()
         {
-            var user = JsonConvert.DeserializeObject<User>(Context.GetHttpContext().Session.GetString("LogedInUser"));
 
             await base.OnConnectedAsync();
         }

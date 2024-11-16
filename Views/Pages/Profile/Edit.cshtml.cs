@@ -17,7 +17,7 @@ namespace Views.Pages.Profile
             this._webHostEnvironment = webHostEnvironment;
         }
         [BindProperty] public User Profile { get; set; } = null!;
-        [BindProperty] public IFormFile Photo { get; set; } = null;
+        [BindProperty] public IFormFile Photo { get; set; } = null!;
         public async Task<IActionResult> OnGetAsync()
         {
             string? logedInUser = HttpContext.Session.GetString("LogedInUser");
@@ -28,20 +28,25 @@ namespace Views.Pages.Profile
 
         public async Task<IActionResult> OnPostAsync(User profile)
         {
+            string avatar = "";
             if (Photo != null)
             {
                 if (Profile.Avatar != null)
                 {
-                    string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/non-static", Profile.Avatar);
+                    string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", Profile.Avatar);
                     System.IO.File.Delete(filePath);
                 }
-                Profile.Avatar = ProcessUploadedFile();
+                avatar = ProcessUploadedFile();
             }
-            
+            string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+            User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+            Profile = await _userService.GetAsync(user.Id);
             Profile.Email = profile.Email;
             Profile.Username = profile.Username;
-            Profile.Avatar = profile.Avatar;
-            // await _userService.UpdateAsync(profile);
+            Profile.Avatar = avatar;
+            user = await _userService.UpdateAsync(Profile);
+            string loginUser = JsonUtil.WriteJsonItem(user);
+            HttpContext.Session.SetString("LogedInUser", loginUser);
             return Page();
         }
 
@@ -59,7 +64,7 @@ namespace Views.Pages.Profile
                 }
 
             }
-            return uniqueFileName;
+            return "/images/" + uniqueFileName;
 
         }
     }
