@@ -10,7 +10,7 @@ using Business;
 using Daos;
 using Services.TicketService;
 
-namespace Views.Pages
+namespace Views.Pages.Tickets
 {
     public class EditTicketPageModel(ITicketService ticketService) : PageModel
     {

@@ -10,10 +10,18 @@ using Daos;
 using Services.TicketService;
 using Utils;
 
-namespace Views.Pages
+namespace Views.Pages.Tickets
 {
-    public class CreateTicketPageModel(ITicketService ticketService) : PageModel
+    public class CreateTicketPageModel : PageModel
     {
+        private readonly ITicketService _ticketService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public CreateTicketPageModel(ITicketService ticketService, IWebHostEnvironment webHostEnvironment)
+        {
+            this._ticketService = ticketService;
+            this._webHostEnvironment = webHostEnvironment;
+        }
+
         [BindProperty]
         public Ticket Ticket { get; set; } = default!;
 
@@ -22,7 +30,7 @@ namespace Views.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var ticketTypes = await ticketService.GetAllTicketType();
+            var ticketTypes = await _ticketService.GetAllTicketType();
             ViewData["TypeId"] = new SelectList(ticketTypes, "Id", "Type");
 
             return Page();
@@ -34,32 +42,40 @@ namespace Views.Pages
             {
                 string? logedInUser = HttpContext.Session.GetString("LogedInUser");
                 User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
-                if(user != null)
+                if (user != null)
                     Ticket.OwnerId = user.Id;
                 Ticket.StatusId = 1;
 
-                if (Image != null)
+                if(Image != null)
                 {
-                    var fileName = Path.GetFileName(Image.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await Image.CopyToAsync(stream);
-                    }
-
-                    Ticket.Image = fileName;
+                    Ticket.Image = ProcessUploadedFile();
                 }
 
-                await ticketService.AddAsync(Ticket);
+                await _ticketService.AddAsync(Ticket);
 
-                return RedirectToPage("MyTicketsPage");
+                return RedirectToPage("MyTickets");
             }
 
-
-            var ticketTypes = await ticketService.GetAllTicketType();
+            var ticketTypes = await _ticketService.GetAllTicketType();
             ViewData["TypeId"] = new SelectList(ticketTypes, "Id", "Type");
             return Page();
+        }
+
+        private string ProcessUploadedFile()
+        {
+            string uniqueFileName = null;
+            if(Image != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + Image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using(var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    Image.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
         }
     }
 }
