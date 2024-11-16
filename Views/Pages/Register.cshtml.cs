@@ -1,3 +1,4 @@
+using Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.UserService;
@@ -33,7 +34,24 @@ namespace Views.Pages
                 ViewData["ErrorMessage"] = "Passwords do not match";
                 return Page();
             }
-            return Page();
+            User user = new User()
+            {
+                Email = Email,
+                Username = Username,
+                Password = BCrypt.Net.BCrypt.HashPassword(Password),
+                RoleId = 3,
+                StatusId = 1
+            };
+            try
+            {
+                await userService.AddAsync(user);
+            }
+            catch (Exception e)
+            {
+                ViewData["ErrorMessage"] = e.Message;
+                return Page();
+            }
+            return RedirectToPage("/Login");
         }
     }
 }
