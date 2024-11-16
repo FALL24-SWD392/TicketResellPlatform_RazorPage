@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Services.ChatService;
+using Utils;
 
 namespace Views.Pages.Chats
 {
@@ -17,9 +18,11 @@ namespace Views.Pages.Chats
         public IList<Chatbox> Chatboxes { get; set; } = default!;
         public async Task<IActionResult> OnGetAsync()
         {
-            if (await _chatService.GetAllAsync() != null)
+            User user = JsonUtil.ReadJsonItem<User>(HttpContext.Session.GetString("LogedInUser"));
+
+            if (await _chatService.GetChatboxOfUser(user.Id) != null)
             {
-                Chatboxes = await _chatService.GetAllAsync();
+                Chatboxes = await _chatService.GetChatboxOfUser(user.Id);
             }
             return Page();
         }

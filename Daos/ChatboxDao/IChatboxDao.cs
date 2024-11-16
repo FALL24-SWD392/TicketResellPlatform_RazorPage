@@ -9,5 +9,6 @@ namespace Daos.ChatboxDao
 {
     public interface IChatboxDao : IDao<Chatbox>
     {
+        Task<List<Chatbox>> GetChatBoxOfUser(int userId);
     }
 }

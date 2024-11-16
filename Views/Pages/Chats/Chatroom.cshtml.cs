@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using NuGet.Packaging;
 using Repositories.ChatboxRepository;
 using Services.ChatService;
 using Services.OrderService;
@@ -21,20 +22,38 @@ namespace Views.Pages.Chats
             _chatService = chatService;
         }
         public IList<Chatbox> Chatboxes { get; set; } = default!;
+        public IList<ChatMessage> Messages { get; set; }
         public Chatbox Chatbox { get; set; } = default!;
 
         public async void OnGet(int id)
         {
-            if (await _chatService.GetAllAsync() != null)
+            User user = JsonUtil.ReadJsonItem<User>(HttpContext.Session.GetString("LogedInUser"));
+            if (await _chatService.GetChatboxOfUser(user.Id) != null)
             {
-                Chatboxes = await _chatService.GetAllAsync();
+                Chatboxes = await _chatService.GetChatboxOfUser(user.Id);
+
+                try
+                {
+                    foreach (var chatbox in Chatboxes)
+                    {
+                        Messages.AddRange(chatbox.ChatMessages);
+                    }
+                }
+                catch
+                {
+
+                }
 
                 Chatbox = await _chatService.GetAsync(id);
             }
         }
 
-        public async void OnPost()
+        public async void OnPost(int id)
         {
+            User user = JsonUtil.ReadJsonItem<User>(HttpContext.Session.GetString("LogedInUser"));
+            Chatbox = await _chatService.GetAsync(id);
+            Chatboxes = await _chatService.GetChatboxOfUser(user.Id);
+
             if (!string.IsNullOrEmpty(Request.Form["btnOrderTicket"]))
             {
                 Chatbox.StatusId = 2;
@@ -69,11 +88,11 @@ namespace Views.Pages.Chats
                     ChatBox = Chatbox,
                     ChatBoxId = Chatbox.Id,
                     Message = message,
-                    Sender = JsonUtil.ReadJsonItem<User>(HttpContext.Session.GetString("LogedInUser")),
-                    SenderId = JsonUtil.ReadJsonItem<User>(HttpContext.Session.GetString("LogedInUser")).Id,
+                    Sender = user,
+                    SenderId = user.Id,
                 };
                 SignalRHub signalRHub = new SignalRHub(_chatService);
-                await signalRHub.SendMessage(chatMessage, Chatbox);
+                await signalRHub.SendMessage(chatMessage, Chatbox, user);
             }
         }
     }

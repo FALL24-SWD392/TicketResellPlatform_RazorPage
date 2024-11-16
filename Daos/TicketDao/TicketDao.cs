@@ -44,6 +44,7 @@ namespace Daos.TicketDao
 
         public async Task<Ticket?> UpdateAsync(Ticket entity)
         {
+            entity.Status = await context.TicketStatuses.FirstOrDefaultAsync(status => status.Id == entity.StatusId);
             context.Tickets.Update(entity);
             await context.SaveChangesAsync();
             context.Entry(entity).State = EntityState.Detached;

@@ -22,7 +22,7 @@
         <div class="w-100 overflow-y-auto overfow-x-hidden p-2 d-flex flex-column align-items-center">
             @foreach (var item in Model.Chatboxes)
             {
-                <a href="/Chats/0" class="w-100 p-2 row justify-content-center align-items-center border border-dark rounded-pill mb-3 bg-secondary-subtle text-decoration-none" role="button">
+                <a href="/Chats/@item.Id" class="w-100 p-2 row justify-content-center align-items-center border border-dark rounded-pill mb-3 bg-secondary-subtle text-decoration-none" role="button">
                     <div class="col-3">
                         <img class="d-block w-100 h-100 object-fit-cover" src="~/images/static/user-avatar.png" />
                     </div>

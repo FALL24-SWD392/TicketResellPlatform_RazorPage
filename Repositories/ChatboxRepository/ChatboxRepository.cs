@@ -33,6 +33,8 @@ namespace Repositories.ChatboxRepository
 
         public async Task<Chatbox?> GetAsync(int id) => await chatboxDao.GetAsync(id);
 
+        public async Task<List<Chatbox>> GetChatBoxOfUser(int UserId) => await chatboxDao.GetChatBoxOfUser(UserId);
+
         public async Task<Chatbox?> UpdateAsync(Chatbox entity) => await chatboxDao.UpdateAsync(entity);
     }
 }

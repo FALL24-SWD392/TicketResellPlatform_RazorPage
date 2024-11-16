@@ -20,3 +20,82 @@
         Response.Redirect("/NoPermission");
     }
 }
+<div class="w-100 h-100">
+    <div class="container-xl h-100">
+        <div class="d-flex justify-content-center align-items-center pb-3 border-bottom">
+            <form class="w-50">
+                <div class="row m-0 justify-content-center align-items-center">
+                    <div class="col-10 p-0">
+                        <input type="text" class="form-control rounded-end-0 rounded-start-pill" style="font-size: 1.6rem;" placeholder="Search" />
+                    </div>
+                    <div class="col-2 p-0">
+                        <button type="submit" class="btn btn-dark w-100 d-block rounded-start-0 rounded-end-pill" style="font-size:1.6rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="w-100 p-3">
+            <div class="w-100 border rounded-3 border-dark-subtle">
+                <div class="w-100 row m-0 fw-bold bg-dark-subtle border-bottom border-dark-subtle text-center">
+                    <div class="col-1">Id</div>
+                    <div class="col-1">Title</div>
+                    <div class="col-1">Image</div>
+                    <div class="col-1">Owner</div>
+                    <div class="col-1">Type</div>
+                    <div class="col-1">Action</div>
+                </div>
+                <div class="w-100 h-100">
+                    @foreach (var item in Model.Tickets)
+                    {
+                        <div>
+                            <div class="row m-0 border-bottom border-dark-subtle justify-content-center align-items-center">
+                                <div class="col-1">@item.Id</div>
+                                <div class="col-1">@item.Title</div>
+                                <div class="col-1">
+                                    <div class="w-100">
+                                        @if (item.Image == null)
+                                        {
+                                            <img src="/images/static/user-avatar.png" class=" d-block w-100 object-fit-cover rounded-circle" />
+                                        }
+                                        else
+                                        {
+                                            <img src="@item.Image" class=" d-block w-100 object-fit-cover rounded-circle" />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-1">@item.Owner.Username</div>
+                                <div class="col-1">@item.Type.Type</div>
+                                <div class="col-1">
+                                    <form asp-page-handler="ApprovedTicket" method="Post">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <div class="w-100">
+                                            <button type="submit" class="btn btn-outline-danger w-100 rounded-pill" style="font-size: 1.6rem">Approved</button>
+                                        </div>
+                                    </form>
+                                    <form asp-page-handler="RejectedTicket" method="Post">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <div class="w-100">
+                                            <button type="submit" class="btn btn-outline-warning w-100 rounded-pill" style="font-size: 1.6rem">Rejected</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row m-0 justify-content-between align-items-center p-3">
+            <div class="col-2">
+                <a href="#" class="btn btn-outline-dark w-100 rounded-pill" style="font-size: 1.6rem">Previous</a>
+            </div>
+            <div class="col-2">
+                <a href="#" class="btn btn-outline-dark w-100 rounded-pill" style="font-size: 1.6rem">Next</a>
+            </div>
+        </div>
+    </div>
+</div>

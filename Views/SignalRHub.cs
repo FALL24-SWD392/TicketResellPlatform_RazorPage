@@ -20,12 +20,20 @@ namespace Views
             await base.OnConnectedAsync();
         }
 
-        public async Task SendMessage(ChatMessage chatMessage, Chatbox chatbox)
+        public async Task SendMessage(ChatMessage chatMessage, Chatbox chatbox, User user)
         {
             var result = await _chatService.CreateChatMessage(chatMessage);
-
-            await Clients.Client(chatbox.BuyerId.ToString()).SendAsync("ReceiveMessage", result);
-            await Clients.Client(chatbox.SellerId.ToString()).SendAsync("ReceiveMessage", result);
+            if (chatbox.BuyerId == user.Id)
+            {
+                await Clients.Client(chatbox.BuyerId.ToString()).SendAsync("MessageSended", result);
+                await Clients.Client(chatbox.SellerId.ToString()).SendAsync("ReceiveMessage", result);
+            }
+            else
+            {
+                await Clients.Client(chatbox.BuyerId.ToString()).SendAsync("ReceiveMessage", result);
+                await Clients.Client(chatbox.SellerId.ToString()).SendAsync("MessageSended", result);
+            }
+            
         }
     }
 }
