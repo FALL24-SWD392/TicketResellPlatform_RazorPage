@@ -49,6 +49,7 @@ namespace Views.Pages.Tickets
                     Ticket.OwnerId = user.Id;
 
                 Ticket.StatusId = 1;
+                Ticket.CreateAt = Ticket.CreateAt;
 
                 var uploadedImage = Request.Form.Files.FirstOrDefault();
                 if (uploadedImage != null)

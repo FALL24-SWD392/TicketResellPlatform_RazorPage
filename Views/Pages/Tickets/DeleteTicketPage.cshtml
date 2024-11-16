@@ -1,0 +1,89 @@
+﻿@page "/Tickets/{id}/Delete"
+@model Views.Pages.Tickets.DeleteTicketPageModel
+
+@{
+    ViewData["Title"] = "DeleteTicketPage";
+    Layout = "_Layout";
+}
+
+<h1>DeleteTicketPage</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Ticket</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.Image)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.Image)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.ExpiryDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.ExpiryDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.Quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.Quantity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.CreateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.CreateAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.UpdateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.UpdateAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.Owner)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.Owner.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.Status.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.Type.Type)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Ticket.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a href="/MyTickets">Back to List</a>
+    </form>
+</div>
