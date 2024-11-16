@@ -31,7 +31,7 @@ namespace Daos.SubsciptionDao
         public async Task<Subcription?> DeleteAsync(int id)
         {
             Subcription sub = await GetAsync(id) ?? throw new KeyNotFoundException("Subscription not found");
-            sub.Description = "Decrepated" + sub.Description;
+            sub.Description = "Decrepated " + sub.Description;
             return await UpdateAsync(sub);
         }
 
