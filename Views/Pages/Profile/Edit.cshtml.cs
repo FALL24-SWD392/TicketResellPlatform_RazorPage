@@ -43,7 +43,7 @@ namespace Views.Pages.Profile
             Profile = await _userService.GetAsync(user.Id);
             Profile.Email = profile.Email;
             Profile.Username = profile.Username;
-            Profile.Avatar = avatar;
+            Profile.Avatar = avatar != "" ? avatar : Profile.Avatar;
             user = await _userService.UpdateAsync(Profile);
             string loginUser = JsonUtil.WriteJsonItem(user);
             HttpContext.Session.SetString("LogedInUser", loginUser);
