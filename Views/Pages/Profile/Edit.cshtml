@@ -3,25 +3,27 @@
 @{
     ViewData["Title"] = "Profile";
     Layout = "_Layout";
-    var photoPath = "/images/static/" + (Model.Profile.Avatar ?? "user-avatar.png");
+    var photoPath = Model.Profile.Avatar ?? "/images/static/user-avatar.png";
 }
 <div class="container-xl" style="min-height: calc(100vh - 70px - 244px); height:calc(100vh - 70px - 244px)">
-    <div class="row w-100 h-100 justify-content-between">
-        <div class="col-3 border-end border-dark-subtle">
-            <div class="w-100">
-                <img class="d-block w-100 object-fit-cover" src="@photoPath"/>
-            </div>
-            <label class="col-sm-2 col-form-label" asp-for="Photo"></label>
-            <div class="col-sm-10">
-                <div class="custom-file">
-                    <input asp-for="Photo" class="custom-file-input form-control">
-                    <label class="custom-file-label">Click here to change avatar</label>
-                </div>
-            </div>
+    <form method="post" class="w-100" enctype="multipart/form-data">
+        <div class="row w-100 h-100 justify-content-between">
 
-        </div>
-        <div class="col-9">
-            <form method="post" class="w-100" enctype="multipart/form-data">
+            <div class="col-3 border-end border-dark-subtle">
+                <div class="w-100">
+                    <img class="d-block w-100 object-fit-cover rounded-circle" style="height: 30.65rem" src="@photoPath" />
+                </div>
+                <label class="col-sm-2 col-form-label" asp-for="Photo"></label>
+                <div class="col-sm-10">
+                    <div class="custom-file">
+                        <input asp-for="Photo" class="custom-file-input form-control" type="file">
+                        <label class="custom-file-label">Click here to change avatar</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-9">
+
                 <h1 class="text-center fw-semibold border-bottom py-3 mb-3">Your profile information</h1>
                 <div class="row py-3 mb-3 border-bottom">
                     <div class="col-4 fs-3">
@@ -31,8 +33,8 @@
                         <p class="fw-bold">Reputation: </p>
                     </div>
                     <div class="col-8 fs-3">
-                        <input class="form-control mb-3" asp-for="@Model.Profile.Username"/>
-                        <input class="form-control mb-3" asp-for="@Model.Profile.Email" type="email"/>
+                        <input class="form-control mb-3" asp-for="@Model.Profile.Username" />
+                        <input class="form-control mb-3" asp-for="@Model.Profile.Email" type="email" />
                         <p class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill d-block" style="width:fit-content">@Model.Profile.Rating</p>
                         <p class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill d-block" style="width:fit-content">@Model.Profile.Reputation</p>
                     </div>
@@ -49,15 +51,17 @@
                         </div>
                     </div>
                 </div>
-            </form>
+
+            </div>
+
         </div>
-    </div>
+    </form>
 </div>
 @section Scripts
 {
     <script>
-        $(document).ready(function() {
-            $('.custom-file-input').on('change', function() {
+        $(document).ready(function () {
+            $('.custom-file-input').on('change', function () {
                 let fileName = $(this).val().split('\\').pop();
                 $(this).next('.custom-file-label').html(fileName);
             });

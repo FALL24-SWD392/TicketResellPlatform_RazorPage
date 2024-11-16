@@ -1,16 +1,27 @@
 ﻿@page "/Subscriptions"
+@using Business
+@using Utils
 @model Views.Pages.SubscriptionPage.IndexModel
 
 @{
     ViewData["Title"] = "Subscriptions";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+    string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+    User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+    if (user == null)
+    {
+        Response.Redirect("../Login");
+    }
 }
 
 <h1 class="text-center mb-4">Subscriptions</h1>
 
-<p class="text-end mb-3">
-    <a asp-page="Create" class="btn btn-dark btn-lg btn-hover">Create New</a>
-</p>
+@if (user.RoleId != 3)
+{
+    <p class="text-end mb-3">
+        <a asp-page="Create" class="btn btn-dark btn-lg btn-hover">Create New</a>
+    </p>
+}
 
 <div class="row row-cols-1 row-cols-md-4 g-4">
     @foreach (var item in Model.Subcription)
@@ -30,9 +41,15 @@
 
                 <!-- Action Buttons with extra spacing -->
                 <div class="card-footer d-flex justify-content-center gap-3">
-                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-dark btn-lg btn-hover">Edit</a>
-                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-dark btn-lg btn-hover">Delete</a>
-                    <a href="/Payment/@item.Id" class="btn btn-dark btn-lg btn-hover">Buy Now</a>
+                    @if (user.RoleId != 3)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-dark btn-lg btn-hover">Edit</a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-dark btn-lg btn-hover">Delete</a>
+                    }
+                    else
+                    {
+                        <a href="/Payment/@item.Id" class="btn btn-dark btn-lg btn-hover">Buy Now</a>
+                    }
                 </div>
             </div>
         </div>
