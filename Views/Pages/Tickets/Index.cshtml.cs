@@ -1,6 +1,7 @@
 using Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Services.TicketService;
 
 namespace Views.Pages.Tickets
 {
@@ -8,40 +9,17 @@ namespace Views.Pages.Tickets
     {
         [BindProperty]
         public IList<Ticket> Tickets { get; set; } = new List<Ticket>();
-        public void OnGet()
+
+        private readonly ITicketService _ticketService;
+
+        public IndexModel(ITicketService ticketService)
         {
-            Tickets = [
-                new(){
-                    Image = "https://placehold.co/400",
-                    Title = "Ticket 1",
-                    Description = "Description 1",
-                    Price = 100
-                },
-                new(){
-                    Image = "https://placehold.co/400",
-                    Title = "Ticket 2",
-                    Description = "Description 2",
-                    Price = 100
-                },
-                new(){
-                    Image = "https://placehold.co/400",
-                    Title = "Ticket 2",
-                    Description = "Description 2",
-                    Price = 100
-                },
-                new(){
-                    Image = "https://placehold.co/400",
-                    Title = "Ticket 2",
-                    Description = "Description 2",
-                    Price = 100
-                },
-                new(){
-                    Image = "https://placehold.co/400",
-                    Title = "Ticket 2",
-                    Description = "Description 2",
-                    Price = 100
-                }
-            ];
+            _ticketService = ticketService;
+        }
+
+        public async Task OnGetAsync()
+        {
+            Tickets = await _ticketService.GetAllAsync();
         }
     }
 }

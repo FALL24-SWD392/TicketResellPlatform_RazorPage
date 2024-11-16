@@ -1,5 +1,5 @@
 ﻿@page "/Tickets/{id}/Edit"
-@model Views.Pages.EditTicketPageModel
+@model Views.Pages.Tickets.EditTicketPageModel
 @{
     ViewData["Title"] = "EditTicketPage";
     Layout = "_Layout";
@@ -7,18 +7,24 @@
 <div class="container-fluid w-80 mx-auto" style="height: 100%">
     <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px; border-radius: 15px;">
         <div class="card-body p-5">
-            <form method="post" style="font-size: 1.6rem;">
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+            <form method="post" style="font-size: 1.6rem;" enctype="multipart/form-data">
                 <input type="hidden" asp-for="Ticket.Id" />
-                <input type="hidden" asp-for="Ticket.Image" />
+
                 <div class="form-group">
-                    <label asp-for="Ticket.Image" class="control-label text-dark font-weight-bold"
-                        style="margin-top: 10px">Upload Image<span class="text-danger">*</span></label>
                     <img id="previewImage"
-                        src="@(Model.Ticket.Image ?? "https://i.pinimg.com/736x/41/59/77/415977fa0031e50a4d56ef456ca88a9b.jpg")"
-                        alt="Uploaded Image" class="card-img-top mb-2" style="height: 25rem; object-fit: cover;" />
-                    <input type="file" class="form-control-file shadow-sm border-0" style="font-size: 1.6rem;" />
+                         src="~/images/@Model.Ticket.Image" 
+                         alt="Uploaded Image" class="card-img-top mb-2" style="height: 25rem; object-fit: cover;" />
                 </div>
+
+                <div class="form-group">
+                    <label asp-for="Image" class="col-sm-2 col-form-label control-label text-dark font-weight-bold">Image</label>
+                    <div class="col-sm-10">
+                        <div class="custom-file">
+                            <input asp-for="Image" class="custom-file-input form-control" type="file" required="false"/>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label asp-for="Ticket.Title" class="control-label text-dark font-weight-bold"
                         style="margin-top: 10px">Title<span class="text-danger">*</span></label>
@@ -33,15 +39,16 @@
                         style="font-size: 1.6rem;" rows="4" placeholder="Enter Description"></textarea>
                     <span asp-validation-for="Ticket.Description" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="Ticket.TypeId" class="control-label text-dark font-weight-bold"
                         style="margin-top: 10px">Type<span class="text-danger">*</span></label>
-                    <select asp-for="Ticket.TypeId" class="form-control shadow-sm border-0" style="font-size: 1.6rem;"
-                        asp-items="ViewBag.TypeId">
+                    <select asp-for="Ticket.TypeId" class="form-control shadow-sm border-0" asp-items="@(ViewData["TypeId"] as SelectList)">
                         <option selected>Select Ticket Type</option>
                     </select>
                     <span asp-validation-for="Ticket.TypeId" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="Ticket.ExpiryDate" class="control-label text-dark font-weight-bold"
                         style="margin-top: 10px">Expiry Date<span class="text-danger">*</span></label>
@@ -68,7 +75,7 @@
                         style="margin-top: 10px; font-size: 1.6rem;" />
                 </div>
                 <div class="form-group text-center">
-                    <a asp-page="MyTicketsPage" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100"
+                    <a href="/MyTickets" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100"
                         style="margin-top: 10px; font-size: 1.6rem;">Back</a>
                 </div>
             </form>

@@ -1,5 +1,5 @@
 ﻿@page "/Tickets/Create"
-@model Views.Pages.CreateTicketPageModel
+@model Views.Pages.Tickets.CreateTicketPageModel
 
 @{
     ViewData["Title"] = "CreateTicketPage";
@@ -11,19 +11,21 @@
 
     <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px; border-radius: 15px;">
         <div class="card-body p-5">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
 
                 <div class="form-group">
-                    <label asp-for="Ticket.Image" class="control-label text-dark font-weight-bold"
-                        style="margin-top: 10px">Upload Image<span class="text-danger">*</span></label>
+                    <img id="previewImage" src="/images/default.jpg"
+                         class="card-img-top mb-2" style="height: 25rem; object-fit: cover;" />
+                </div>
 
-                    <img id="previewImage" src="https://i.pinimg.com/736x/41/59/77/415977fa0031e50a4d56ef456ca88a9b.jpg"
-                        alt="Uploaded Image" class="card-img-top mb-2" style="height: 25rem; object-fit: cover;" />
-
-                    <input asp-for="Ticket.Image" type="file" class="form-control-file shadow-sm border-0"
-                        onchange="previewImage(event)" />
-
+                <div class="form-group">
+                    <label asp-for="Image" class="col-sm-2 col-form-label control-label text-dark font-weight-bold">Image<span class="text-danger">*</span></label>
+                    <div class="col-sm-10">
+                        <div class="custom-file">
+                            <input asp-for="Image" class="custom-file-input form-control"/>
+                        </div>
+                    </div>
                     <span asp-validation-for="Ticket.Image" class="text-danger"></span>
                 </div>
 
@@ -43,11 +45,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Ticket.TypeId" class="control-label text-dark font-weight-bold"
-                        style="margin-top: 10px">Type<span class="text-danger">*</span></label>
-                    <select asp-for="Ticket.TypeId" class="form-control shadow-sm border-0" asp-items="ViewBag.TypeId">
+                    <label asp-for="Ticket.TypeId" class="control-label text-dark font-weight-bold" style="margin-top: 10px">
+                        Type<span class="text-danger">*</span>
+                    </label>
+                    <select asp-for="Ticket.TypeId" class="form-control shadow-sm border-0" asp-items="@(ViewData["TypeId"] as SelectList)">
                         <option selected>Select Ticket Type</option>
                     </select>
+                    <span asp-validation-for="Ticket.TypeId" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
@@ -78,7 +82,7 @@
                         style="margin-top: 10px" />
                 </div>
                 <div class="form-group text-center">
-                    <a asp-page="MyTicketsPage" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100"
+                    <a href="/MyTickets" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100"
                         style="margin-top: 10px">Back</a>
                 </div>
             </form>
@@ -124,30 +128,13 @@
         font-size: 1.25rem;
     }
 
-    .nav-link.active {
-        background-color: #000;
-        color: white;
-    }
-
-    .nav-link,
-    h1,
+    .h1,
     .card-title {
         color: black;
-    }
-
-    .nav-link:hover {
-        background-color: lightgray;
     }
 </style>
 
 @section Scripts {
-    <script>
-        function previewImage(event) {
-            const preview = document.getElementById('previewImage');
-            preview.src = URL.createObjectURL(event.target.files[0]);
-            preview.onload = () => URL.revokeObjectURL(preview.src);
-        }
-    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
