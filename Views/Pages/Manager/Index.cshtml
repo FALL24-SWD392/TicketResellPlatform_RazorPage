@@ -1,8 +1,24 @@
 ﻿@page "/Manager"
 @model Views.Pages.Manager.IndexModel
+@using Business
+@using Utils
 @{
     ViewBag.Title = "Users Manager";
     Layout = "_Manager";
+    string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+    User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+    if (user != null)
+    {
+        user.Avatar = user.Avatar == null ? "/images/static/user-avatar.png" : user.Avatar;
+        if (user.RoleId != 1 && user.RoleId != 2)
+        {
+            Response.Redirect("/NoPermission");
+        }
+    }
+    else
+    {
+        Response.Redirect("/NoPermission");
+    }
 }
 <div class="w-100 h-100">
     <div class="container-xl h-100">
