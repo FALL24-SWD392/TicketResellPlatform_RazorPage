@@ -1,8 +1,19 @@
 ﻿@page "/Orders"
 @model Views.Pages.MyOrdersPageModel
+@using Business
+@using Utils
 @{
     ViewData["Title"] = "My Orders";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+
+    string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+    User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+    int roleId = user.RoleId;
+    int userId = user.Id;
+    if (roleId != 3)
+    {
+        Response.Redirect("../NoPermission");
+    }
 }
 <div class="container-fluid w-80 mx-auto" style="height: 100%">
     <h1 class="text-center text-dark my-5">My Orders</h1>
@@ -33,26 +44,29 @@
             <tbody>
                 @foreach (var item in Model.Order)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ChatBox.Buyer.Username)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ChatBox.Seller.Username)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ChatBox.Ticket.Title)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Quantity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ChatBox.Status)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreateAt)
-                        </td>
-                    </tr>
+                    if (item.ChatBox.BuyerId == userId || item.ChatBox.SellerId == userId)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ChatBox.Buyer.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ChatBox.Seller.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ChatBox.Ticket.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ChatBox.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreateAt)
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>

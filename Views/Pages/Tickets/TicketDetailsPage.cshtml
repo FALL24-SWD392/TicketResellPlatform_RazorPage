@@ -1,9 +1,20 @@
 ﻿@page "/Tickets/{id?}"
 @model Views.Pages.TicketDetailsPageModel
+@using Business
+@using Utils
 
 @{
     ViewData["Title"] = "TicketDetailsPage";
     Layout = "_Layout";
+
+    string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+    User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+    int roleId = user.RoleId;
+    int userId = user.Id;
+    if (roleId != 3)
+    {
+        Response.Redirect("../NoPermission");
+    }
 }
 
 <div class="container-xl" style="height: 100%">
@@ -26,12 +37,22 @@
                 <p class="d-flex justify-content-between align-items-center fs-2">Reputaion: <span class="badge fs-2 text-success border-success border">@Model.Ticket.Owner.Reputation</span></p>
                 <p class="d-flex justify-content-between align-items-center fs-2">Rating: <span class="badge fs-2 text-warning border-warning border">@Model.Ticket.Owner.Rating</span></p>
             </div>
-            <form class="w-100 mt-3">
-                <button type="submit" class="btn btn-outline-dark w-100" style="font-size: 1.6rem;">Contact Seller</button>
-            </form>
-            <div class="w-100 mt-3">
-                <a href="/Tickets/@Model.Ticket.Id/Edit" class="btn btn-outline-dark w-100" style="font-size: 1.6rem;">Edit</a>
-            </div>
+            @{
+                if(Model.Ticket.OwnerId != userId)
+                {
+                    <form class="w-100 mt-3">
+                        <button type="submit" class="btn btn-outline-dark w-100" style="font-size: 1.6rem;">Contact Seller</button>
+                    </form>
+                }
+            }
+            @{
+                if(Model.Ticket.OwnerId == userId)
+                {
+                    <div class="w-100 mt-3">
+                        <a href="/Tickets/@Model.Ticket.Id/Edit" class="btn btn-outline-dark w-100" style="font-size: 1.6rem;">Edit</a>
+                    </div>
+                }
+            }
         </div>  
     </div>
 </div>  
