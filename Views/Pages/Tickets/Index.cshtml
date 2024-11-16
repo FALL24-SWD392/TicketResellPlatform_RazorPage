@@ -4,7 +4,7 @@
     ViewData["Title"] = "Tickets";
     Layout = "_Layout";
 }
-<div class="container-xl d-flex flex-row flex-wrap">
+<div class="container-xl">
     <div class="row">
         @foreach (var item in Model.Tickets)
         {
@@ -26,9 +26,9 @@
                             style="text-align: justify;">Valid until:
                             <span class="badge border border-danger text-danger">@item.ExpiryDate</span>
                         </p>
-                        <a asp-page="/Tickets/TicketDetailsPage" asp-route-id="@item.Id" type="button"
-                            class="btn btn-outline-dark w-100"
-                            style="font-size: 1.6rem; &:hover{color:white !important}">View details</a>
+                        <a href="/Tickets/@item.Id" type="button"
+                            class="btn btn-dark w-100 text-white"
+                           style="font-size: 1.6rem; transition: 0.3s;">View details</a>
                     </div>
                 </div>
             </div>
@@ -38,3 +38,10 @@
 
     </div>
 </div>
+
+<style>
+    .btn:hover {
+        background-color: white !important;
+        color: black !important;
+    }
+</style>

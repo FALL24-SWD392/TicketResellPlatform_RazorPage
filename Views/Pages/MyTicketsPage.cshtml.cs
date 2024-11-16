@@ -26,5 +26,11 @@ namespace Views.Pages
         {
             Ticket = await _ticketService.GetAllAsync();
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            await _ticketService.DeleteAsync(id);
+            return RedirectToPage();
+        }
     }
 }

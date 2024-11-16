@@ -50,13 +50,12 @@ namespace Views.Pages
                 };
                 return Page();
             }
+            var ticketTypes = await ticketService.GetAllTicketType();
+            ViewData["TypeId"] = new SelectList(ticketTypes, "Id", "Type");
             Ticket = ticket;
-           //ViewData["TypeId"] = new SelectList(_context.TicketTypes, "Id", "Type");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

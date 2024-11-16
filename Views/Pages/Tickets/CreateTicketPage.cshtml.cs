@@ -13,26 +13,36 @@ namespace Views.Pages
 {
     public class CreateTicketPageModel(ITicketService ticketService) : PageModel
     {
-        //public IActionResult OnGet()
-        //{
-        //    ViewData["TypeId"] = new SelectList(ticketService., "Id", "Type");
-        //    return Page();
-        //}
-
         [BindProperty]
         public Ticket Ticket { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+        public async Task<IActionResult> OnGetAsync()
+        {
+            var ticketTypes = await ticketService.GetAllTicketType();
+            ViewData["TypeId"] = new SelectList(ticketTypes, "Id", "Type");
+
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+                User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+
+                Ticket.OwnerId = loggedInUser.Id;
+                Ticket.StatusId = 1;
+
+                await ticketService.AddAsync(Ticket);
+
+                return RedirectToPage("MyTicketsPage");
             }
 
-            await ticketService.AddAsync(Ticket);
 
-            return RedirectToPage("MyTicketsPage");
+            var ticketTypes = await ticketService.GetAllTicketType();
+            ViewData["TypeId"] = new SelectList(ticketTypes, "Id", "Type");
+            return Page();
         }
     }
 }

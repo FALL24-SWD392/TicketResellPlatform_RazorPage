@@ -33,15 +33,16 @@
                         style="font-size: 1.6rem;" rows="4" placeholder="Enter Description"></textarea>
                     <span asp-validation-for="Ticket.Description" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="Ticket.TypeId" class="control-label text-dark font-weight-bold"
                         style="margin-top: 10px">Type<span class="text-danger">*</span></label>
-                    <select asp-for="Ticket.TypeId" class="form-control shadow-sm border-0" style="font-size: 1.6rem;"
-                        asp-items="ViewBag.TypeId">
+                    <select asp-for="Ticket.TypeId" class="form-control shadow-sm border-0" asp-items="@(ViewData["TypeId"] as SelectList)">
                         <option selected>Select Ticket Type</option>
                     </select>
                     <span asp-validation-for="Ticket.TypeId" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="Ticket.ExpiryDate" class="control-label text-dark font-weight-bold"
                         style="margin-top: 10px">Expiry Date<span class="text-danger">*</span></label>
@@ -68,7 +69,7 @@
                         style="margin-top: 10px; font-size: 1.6rem;" />
                 </div>
                 <div class="form-group text-center">
-                    <a asp-page="MyTicketsPage" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100"
+                    <a href="/MyTickets" class="btn btn-dark font-weight-bold btn-lg shadow-sm w-100"
                         style="margin-top: 10px; font-size: 1.6rem;">Back</a>
                 </div>
             </form>

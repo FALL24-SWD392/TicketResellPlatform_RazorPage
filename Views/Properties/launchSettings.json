@@ -3,6 +3,7 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "Tickets",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
