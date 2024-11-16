@@ -1,8 +1,24 @@
 ﻿@page "/Manager"
 @model Views.Pages.Manager.IndexModel
+@using Business
+@using Utils
 @{
     ViewBag.Title = "Users Manager";
     Layout = "_Manager";
+    string? logedInUser = HttpContext.Session.GetString("LogedInUser");
+    User? user = logedInUser != null ? JsonUtil.ReadJsonItem<User>(logedInUser) : null;
+    if (user != null)
+    {
+        user.Avatar = user.Avatar == null ? "/images/static/user-avatar.png" : user.Avatar;
+        if (user.RoleId != 1 && user.RoleId != 2)
+        {
+            Response.Redirect("/NoPermission");
+        }
+    }
+    else
+    {
+        Response.Redirect("/NoPermission");
+    }
 }
 <div class="w-100 h-100">
     <div class="container-xl h-100">
@@ -41,17 +57,37 @@
                                 <div class="col-1">@item.Id</div>
                                 <div class="col-1">
                                     <div class="w-100">
-                                        <img src="@item.Avatar" class=" d-block w-100 object-fit-cover rounded-circle" />
+                                        @if (item.Avatar == null)
+                                        {
+                                            <img src="/images/static/user-avatar.png" class=" d-block w-100 object-fit-cover rounded-circle" />
+                                        }
+                                        else
+                                        {
+                                            <img src="@item.Avatar" class=" d-block w-100 object-fit-cover rounded-circle" />
+                                        }
                                     </div>
                                 </div>
                                 <div class="col-3">@item.Username</div>
                                 <div class="col-3">@item.Email</div>
                                 <div class="col-1">
-                                    <div class="w-100 text-center">@item.Role.Name</div>
+                                    <div class="w-100 text-center">
+                                        @if (item.RoleId == 3)
+                                        {
+                                            <span class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill text-capitalize">@item.Role.Name</span>
+                                        }
+                                        else if (item.RoleId == 2)
+                                        {
+                                            <span class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill text-capitalize">@item.Role.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill text-capitalize">@item.Role.Name</span>
+                                        }
+                                    </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="w-100 text-center">
-                                        @if(item.StatusId == 1)
+                                        @if (item.StatusId == 1)
                                         {
                                             <span class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill text-capitalize">@item.Status.Status</span>
                                         }
@@ -66,7 +102,18 @@
                                     </div>
                                 </div>
                                 <div class="col-1">
-                                    <button class="btn btn-dark w-100">Edit</button>
+                                    <form asp-page-handler="RemoveUser" method="Post">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <div class="w-100">
+                                            <button type="submit" class="btn btn-outline-danger w-100 rounded-pill" style="font-size: 1.6rem">Remove</button>
+                                        </div>
+                                    </form>
+                                    <form asp-page-handler="BanUser" method="Post">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <div class="w-100">
+                                            <button type="submit" class="btn btn-outline-warning w-100 rounded-pill" style="font-size: 1.6rem">Ban</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

@@ -48,9 +48,10 @@ namespace Daos.UserDao
 
         public async Task<User?> UpdateAsync(User entity)
         {
+            entity.UpdateAt = DateTime.Now;
+            entity.Status = await context.UserStatuses.FirstOrDefaultAsync(s => s.Id == entity.StatusId);
             context.Users.Update(entity);
             await context.SaveChangesAsync();
-            context.Entry(entity).State = EntityState.Detached;
             return entity;
         }
     }

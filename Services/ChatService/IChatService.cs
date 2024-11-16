@@ -9,5 +9,6 @@ namespace Services.ChatService
 {
     public interface IChatService : IService<Chatbox>
     {
+        public Task<ChatMessage?> CreateChatMessage(ChatMessage entity);
     }
 }
